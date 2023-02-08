@@ -1,4 +1,4 @@
-import {FormLabel, Input } from "@chakra-ui/react"
+import {FormControl, FormLabel, Input } from "@chakra-ui/react"
 import { useState } from "react"
 
 export const EmailInput = () => {
@@ -8,10 +8,10 @@ export const EmailInput = () => {
   
   
     return (
-        <>
-        <FormLabel>Email</FormLabel>
-        <Input type='email' value={input} onChange={handleInputChange} />
-        </>
+        <FormControl>
+            <FormLabel paddingBottom={1}>Email</FormLabel>
+            <Input type='email' value={input} onChange={handleInputChange} />
+        </FormControl>
       
     )
   }
