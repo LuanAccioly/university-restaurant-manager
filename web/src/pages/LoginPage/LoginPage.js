@@ -1,4 +1,4 @@
-import { Box, Button, Center, FormControl, VStack} from "@chakra-ui/react";
+import { Box, Button, Center, Link, VStack} from "@chakra-ui/react";
 import { EmailInput } from "../../components/EmailInput/EmailInput";
 import { PasswordInput } from "../../components/PasswordInput/PasswordInput";
 
@@ -11,6 +11,9 @@ export const LoginPage = () => {
                     <PasswordInput marginTop={150}/>
                     <Button w={"100%"} colorScheme='green'>Entrar</Button>
                 </VStack>
+                <Box>
+                    <Link fontSize={14} color="blue.400">Cadastre-se</Link>
+                </Box>
             </Box>
 
         </Center>
