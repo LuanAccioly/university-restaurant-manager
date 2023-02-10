@@ -2,7 +2,7 @@ import { Box, Button, Center, Link, VStack} from "@chakra-ui/react";
 import { EmailInput } from "../../components/EmailInput/EmailInput";
 import { PasswordInput } from "../../components/PasswordInput/PasswordInput";
 
-export const LoginPage = () => {
+export const Login = () => {
     return (
         <Center minH="90vh">
             <Box p={6} maxW="sm" borderWidth="2px" borderRadius="lg" >

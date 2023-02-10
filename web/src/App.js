@@ -3,19 +3,23 @@ import {
   ChakraProvider,
   Box,
   Grid,
-  theme,
+  extendTheme,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { LoginPage } from './pages/LoginPage/LoginPage';
+import { Login } from './pages/Login/Login';
+import { Register } from './pages/Register/Register';
+import theme from './styles/theme.js'
+// import { Route, Routes } from "react-router-dom";
 
+const appTheme = extendTheme(theme) 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={appTheme}>
       <Box textAlign="center" fontSize="xl">
         <Grid p={3}>
           <ColorModeSwitcher justifySelf="flex-end" />
         </Grid>
-        <LoginPage/>
+        <Register />
       </Box>
     </ChakraProvider>
   );
