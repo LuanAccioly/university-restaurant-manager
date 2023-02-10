@@ -1,4 +1,4 @@
-import { Center, Flex, VStack } from "@chakra-ui/react"
+import { Box, Center, Divider, Flex, FormControl, Heading, HStack, VStack } from "@chakra-ui/react"
 import { EmailInput } from "../../components/EmailInput/EmailInput"
 
 export const Register = () => {
@@ -8,22 +8,22 @@ export const Register = () => {
             <Center w={"40%"} bg={"pink.200"}>
                 <p>olaola</p>
             </Center>
-            <Center flex={1} bg={"yellow"}>
-                <VStack spacing={"30px"} w={"100%"} bg={"blue"} p={"50px"}>
-                    <Flex bg={"red"}>
-                        <EmailInput />
-                        <EmailInput />
-                    </Flex>
-                    <Flex bg={"red"}>
-                        <EmailInput />
-                        <EmailInput />
-                    </Flex>
-                    <Flex bg={"red"}>
-                        <EmailInput />
-                        <EmailInput />
-                    </Flex>
-                </VStack>
-            </Center>
+            <Box flex={1}>
+                <Flex ml={"100px"}>
+                    <Heading>Cadastro</Heading>
+                </Flex>
+                <FormControl paddingInline={"100px"} mt={50}>
+                    <HStack spacing={30}>
+                        <Box w={"100%"}>
+                            <EmailInput/>
+                        </Box>
+                        <Box w={"100%"}>
+                            <EmailInput/>
+                        </Box>
+                    </HStack>
+                </FormControl>
+
+            </Box>
         </Flex>
     )
 } 
