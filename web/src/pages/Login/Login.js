@@ -2,6 +2,7 @@ import { Box, Button, Center, Link, VStack} from "@chakra-ui/react";
 import { EmailInput } from "../../components/EmailInput/EmailInput";
 import { PasswordInput } from "../../components/PasswordInput/PasswordInput";
 
+
 export const Login = () => {
     return (
         <Center minH="90vh">
@@ -19,3 +20,5 @@ export const Login = () => {
         </Center>
     );
 };
+
+export default Login;
