@@ -6,7 +6,7 @@ export const EmailInput = () => {
     const handleInputChange = (e) => setInput(e.target.value)
     return (
         <FormControl>
-            <FormLabel paddingBottom={1}>Email</FormLabel>
+            <FormLabel paddingBottom={1} fontWeight={"bold"}>Email</FormLabel>
             <Input type='email' value={input} onChange={handleInputChange} />
         </FormControl>
       
