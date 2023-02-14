@@ -1,4 +1,8 @@
-
+const config = {
+    initialColorMode: "light",
+    useSystemColorMode: false,
+    disableTransitionOnChange: false,
+}
 const theme = {
   styles: {
     global: () => ({
@@ -7,6 +11,7 @@ const theme = {
       },
     }),
   },
+  config
 };
 
 export default theme;
