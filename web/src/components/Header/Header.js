@@ -1,4 +1,5 @@
 import { Flex, Heading, useColorModeValue } from "@chakra-ui/react"
+import { Outlet, Link } from "react-router-dom";
 import { ColorModeSwitcher } from "../../ColorModeSwitcher"
 
 export const Header = () => {

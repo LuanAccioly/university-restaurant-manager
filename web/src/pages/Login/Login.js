@@ -13,7 +13,7 @@ export const Login = () => {
                     <Button w={"100%"} colorScheme='green'>Entrar</Button>
                 </VStack>
                 <Box>
-                    <Link fontSize={14} color="blue.400">Cadastre-se</Link>
+                    <Link href="/register" fontSize={14} color="blue.400">Cadastre-se</Link>
                 </Box>
             </Box>
 

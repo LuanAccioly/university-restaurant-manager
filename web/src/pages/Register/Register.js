@@ -1,10 +1,17 @@
-import { Box, Center, Checkbox, Flex, Heading, HStack, VStack } from "@chakra-ui/react"
-import React from "react";
+import { Box, Center, Checkbox, Flex, FormControl, FormLabel, Heading, HStack, Input, VStack } from "@chakra-ui/react"
+import React, { useEffect, useState } from "react";
 import { EmailInput } from "../../components/EmailInput/EmailInput"
 import NormalInput from "../../components/NormalInput/NormalInput";
 
 export const Register = () => {
     const [registred, setRegistred] = React.useState(true)
+    const [matricula, setMatricula] = useState('')
+
+    useEffect(() => {
+      if(!registred) {
+          setMatricula('');
+      }
+  }, [registred])
     return(
 
         <Flex size="100vh" h={"90vh"}>
@@ -35,7 +42,13 @@ export const Register = () => {
                     </Checkbox>
                     <HStack spacing={30} w={"100%"}>
                         <Box flex={1}>
-                            <NormalInput active={registred? false : true} title="Matrícula"/>
+                          <FormControl isRequired isDisabled={!registred ? true : false}>
+                              <FormLabel>Matrícula </FormLabel>
+                              <Input 
+                              value={matricula}
+                              onChange={e => setMatricula(e.target.value)}
+                              placeholder=''/>
+                          </FormControl>
                         </Box>
                         <Box flex={1}>
                             <NormalInput title="Suas lamúrias:"/>
