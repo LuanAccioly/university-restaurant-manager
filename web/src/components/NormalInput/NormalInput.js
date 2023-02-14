@@ -1,15 +1,13 @@
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 
-function NormalInput(props) {
-    const title = props.title;
-    const active = props.active;
+function NormalInput({active, title, ...rest}) {
       return (
         <FormControl isRequired isDisabled={active ? true : false}>
             <FormLabel>{title} </FormLabel>
             <Input 
-            placeholder=''/>
+            {...rest}
+            />
         </FormControl>
       );
   }
-  
   export default NormalInput
