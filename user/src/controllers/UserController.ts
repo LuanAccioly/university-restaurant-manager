@@ -1,6 +1,6 @@
 import {Request, Response} from 'express'
 import User from '../models/User'
-import jwt from 'jsonwebtoken'
+import * as jwt from 'jsonwebtoken'
 
 class UserController {
     async create(req: Request, res: Response) {
@@ -43,8 +43,9 @@ class UserController {
         }
     }
 
-    async index(_req: Request, res: Response) {
+    async index(req: Request, res: Response) {
         try {
+            if(!req.user.manager) return res.sendStatus(401)
 
             const users = await User.find()
 
@@ -65,9 +66,12 @@ class UserController {
             const match = await user?.comparePassword(password);
             if(match) {
                 const token = jwt.sign({
-                    user: user
+                    user: {name: user?.name, email: user?.email, manager: user?.manager}
                 },
-                process.env.SECRET
+                process.env.SECRET,
+                {
+                    expiresIn: '2h'
+                }
                 )
                 return res.json({user, token})
             } else {
