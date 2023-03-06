@@ -1,11 +1,20 @@
-import { Flex, Heading, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Heading, useColorModeValue, Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
+import { AuthContext } from '../../contexts/AuthContext';
 
 export const Header = () => {
   const outlineColor = useColorModeValue('gray.200', 'gray.700');
+  const {signOut} = useContext(AuthContext)
 
   const navigate = useNavigate();
+
+  async function handleSignOut(){
+     signOut()
+    navigate('/hub')
+}
+
 
   return (
     <Flex
@@ -15,10 +24,13 @@ export const Header = () => {
       justifyContent={'space-between'}
       alignItems={'center'}
     >
-      <Heading size="md" cursor={'pointer'} onClick={() => navigate('/login')}>
+      <Heading size="md" cursor={'pointer'} onClick={() => navigate('/hub')}>
         UFRPE - RU
       </Heading>
-      <ColorModeSwitcher />
+      <Flex>
+        <ColorModeSwitcher />
+        <Button onClick={handleSignOut}>Sair</Button>
+      </Flex>
     </Flex>
   );
 };

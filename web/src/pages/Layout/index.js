@@ -1,16 +1,39 @@
-import { Flex, Heading, useColorModeValue } from '@chakra-ui/react';
-import { ColorModeSwitcher } from '../../ColorModeSwitcher';
-
+import {useEffect, useContext} from 'react'
 import { Outlet } from 'react-router-dom';
+import { useNavigate, useLocation  } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 import { Header } from '../../components/Header/Header';
+import { MobileNav, SidebarWithHeader } from '../../components/SideBarWithHeader/SideBarWithHeader';
+
 
 export const Layout = () => {
-  const outlineColor = useColorModeValue('gray.200', 'gray.700');
+  const {isAuthenticated, user, isHub} = useContext(AuthContext)
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if(!isAuthenticated && location.pathname !== '/hub/register' && location.pathname !== '/hub') {
+      navigate("/hub/login");
+    }
+  }, []);
+
 
   return (
     <>
-      <Header />
+      {!user?.manager ? (
+      <>
+      {isAuthenticated && <MobileNav/>}
       <Outlet />
+      </>
+      ) : (
+        isHub ? <>
+        {isAuthenticated && <MobileNav/>}
+        <Outlet />
+        </> :
+        <SidebarWithHeader>
+        <Outlet />
+      </SidebarWithHeader>
+      )}
     </>
   );
 };
