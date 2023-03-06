@@ -11,7 +11,6 @@ import {
 } from 'react-router-dom';
 import { Layout } from './pages/Layout';
 import { AuthProvider } from './contexts/AuthContext';
-import { Redirect } from "react-router-dom";
 import { Home } from './pages/Home/Home';
 
 const container = document.getElementById('root');
