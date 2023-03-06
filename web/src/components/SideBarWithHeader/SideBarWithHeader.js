@@ -152,7 +152,7 @@ export const MobileNav = ({ onOpen, ...rest }) => {
     <Flex
       ml={{ base: 0, md: !isHub ? 60 : 0 }}
       px={{ base: 4, md: 4 }}
-      height="20"
+      height={'8vh'}
       alignItems="center"
       bg={useColorModeValue('white', 'gray.900')}
       borderBottomWidth="1px"

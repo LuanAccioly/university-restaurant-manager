@@ -10,7 +10,7 @@ import {useToast} from '@chakra-ui/react'
 export const Login = () => {
     const toast = useToast();
     const navigate = useNavigate();
-    const {signIn} = useContext(AuthContext)
+    const {signIn, isAuthenticated} = useContext(AuthContext)
 
     async function handleSignIn(){
         try {
@@ -27,7 +27,7 @@ export const Login = () => {
     }
 
     return (
-        <Center minH="90vh">
+        <Center minH={isAuthenticated ? "92vh" : '100vh'}>
             <Box p={6} maxW="sm" borderWidth="2px" borderRadius="lg" >
                 <VStack spacing={4} align='stretch'>
                     <EmailInput/>

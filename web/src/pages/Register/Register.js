@@ -1,11 +1,14 @@
 import { Box, Center, Checkbox, Flex, FormControl, FormLabel, Heading, HStack, Input, VStack } from "@chakra-ui/react"
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { EmailInput } from "../../components/EmailInput/EmailInput"
 import NormalInput from "../../components/NormalInput/NormalInput";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export const Register = () => {
     const [registred, setRegistred] = React.useState(true)
     const [matricula, setMatricula] = useState('')
+    const {signIn, isAuthenticated} = useContext(AuthContext)
+
 
     useEffect(() => {
       if(!registred) {
@@ -14,7 +17,7 @@ export const Register = () => {
   }, [registred])
     return(
 
-        <Flex size="100vh" h={"90vh"}>
+        <Flex size="100vh" h={isAuthenticated ? "92vh" : '100vh'}>
             <Center w={"60%"} bg={"pink.200"}>
                 <p>olaola</p>
             </Center>

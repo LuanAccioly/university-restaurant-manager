@@ -7,7 +7,7 @@ export const Home = () => {
 
     return(
 
-        <Flex size="100vh" h={"90vh"}>
+        <Flex h={isAuthenticated ? "92vh" : '100vh'}>
             {isAuthenticated ? 
             (<Center w={"100%"} bg={"pink.200"}>
                 <p>LOGADO {user.name}</p>
