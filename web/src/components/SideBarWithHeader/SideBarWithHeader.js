@@ -46,9 +46,7 @@ const LinkItems = [
   { name: 'Settings', icon: FiSettings },
 ];
 
-export function SidebarWithHeader({
-  children,
-}) {
+export function SidebarWithHeader({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
@@ -63,14 +61,15 @@ export function SidebarWithHeader({
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
-        size="full">
+        size="full"
+      >
         <DrawerContent>
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} >
+      <Box ml={{ base: 0, md: 60 }}>
         {children}
         {console.log(isOpen)}
       </Box>
@@ -88,15 +87,22 @@ const SidebarContent = ({ onClose, ...rest }) => {
       w={{ base: 'full', md: 60 }}
       pos="fixed"
       h="full"
-      {...rest}>
+      {...rest}
+    >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
           Logo
         </Text>
-        <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} bg='blue' />
-        <Button bg='blue' onClick={onClose}>dsad</Button>
+        <CloseButton
+          display={{ base: 'flex', md: 'none' }}
+          onClick={onClose}
+          bg="blue"
+        />
+        <Button bg="blue" onClick={onClose}>
+          dsad
+        </Button>
       </Flex>
-      {LinkItems.map((link) => (
+      {LinkItems.map(link => (
         <NavItem key={link.name} icon={link.icon}>
           {link.name}
         </NavItem>
@@ -105,10 +111,13 @@ const SidebarContent = ({ onClose, ...rest }) => {
   );
 };
 
-
 const NavItem = ({ icon, children, ...rest }) => {
   return (
-    <Link href="#" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+    <Link
+      href="#"
+      style={{ textDecoration: 'none' }}
+      _focus={{ boxShadow: 'none' }}
+    >
       <Flex
         align="center"
         p="4"
@@ -120,7 +129,8 @@ const NavItem = ({ icon, children, ...rest }) => {
           bg: 'cyan.400',
           color: 'white',
         }}
-        {...rest}>
+        {...rest}
+      >
         {icon && (
           <Icon
             mr="4"
@@ -138,15 +148,15 @@ const NavItem = ({ icon, children, ...rest }) => {
 };
 
 export const MobileNav = ({ onOpen, ...rest }) => {
-    const outlineColor = useColorModeValue('gray.200', 'gray.700');
-  const {signOut, user, isHub, setIsHub} = useContext(AuthContext)
+  const outlineColor = useColorModeValue('gray.200', 'gray.700');
+  const { signOut, user, isHub, setIsHub } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
-  async function handleSignOut(){
-     signOut()
-    navigate('/hub')
-}
+  async function handleSignOut() {
+    signOut();
+    navigate('/hub');
+  }
 
   return (
     <Flex
@@ -154,11 +164,12 @@ export const MobileNav = ({ onOpen, ...rest }) => {
       px={{ base: 4, md: 4 }}
       height={'8vh'}
       alignItems="center"
-      bg={useColorModeValue('white', 'gray.900')}
+      // bg="blue"
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
       justifyContent={{ base: 'space-between', md: 'space-between' }}
-      {...rest}>
+      {...rest}
+    >
       <IconButton
         display={{ base: 'flex', md: 'none' }}
         onClick={onOpen}
@@ -171,7 +182,8 @@ export const MobileNav = ({ onOpen, ...rest }) => {
         display={{ base: 'flex', md: 'none' }}
         fontSize="2xl"
         fontFamily="monospace"
-        fontWeight="bold">
+        fontWeight="bold"
+      >
         Logo
       </Text>
       <Heading size="md" cursor={'pointer'} onClick={() => navigate('/hub')}>
@@ -179,19 +191,22 @@ export const MobileNav = ({ onOpen, ...rest }) => {
       </Heading>
 
       <HStack spacing={{ base: '0', md: '6' }}>
-        {!user?.manager && <IconButton
-          size="lg"
-          variant="ghost"
-          aria-label="open menu"
-          icon={<FiShoppingCart />}
-        />}
+        {!user?.manager && (
+          <IconButton
+            size="lg"
+            variant="ghost"
+            aria-label="open menu"
+            icon={<FiShoppingCart />}
+          />
+        )}
         <ColorModeSwitcher />
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton
               py={2}
               transition="all 0.3s"
-              _focus={{ boxShadow: 'none' }}>
+              _focus={{ boxShadow: 'none' }}
+            >
               <HStack>
                 <Avatar
                   size={'sm'}
@@ -203,10 +218,11 @@ export const MobileNav = ({ onOpen, ...rest }) => {
                   display={{ base: 'none', md: 'flex' }}
                   alignItems="flex-start"
                   spacing="1px"
-                  ml="2">
+                  ml="2"
+                >
                   <Text fontSize="sm">{user?.name}</Text>
                   <Text fontSize="xs" color="gray.600">
-                 { user?.manager ? 'Admin' : 'Usuário'}
+                    {user?.manager ? 'Admin' : 'Usuário'}
                   </Text>
                 </VStack>
                 <Box display={{ base: 'none', md: 'flex' }}>
@@ -216,14 +232,21 @@ export const MobileNav = ({ onOpen, ...rest }) => {
             </MenuButton>
             <MenuList
               bg={useColorModeValue('white', 'gray.900')}
-              borderColor={useColorModeValue('gray.200', 'gray.700')}>
-              {user?.manager && <MenuItem onClick={() => {
-                navigate(isHub ? '/cal' : '/hub')
-                setIsHub(isHub ? false : true)
-              }}>{isHub ? 'Gestão' : 'Visualização'}</MenuItem>}
+              borderColor={useColorModeValue('gray.200', 'gray.700')}
+            >
+              {user?.manager && (
+                <MenuItem
+                  onClick={() => {
+                    navigate(isHub ? '/cal' : '/hub');
+                    setIsHub(isHub ? false : true);
+                  }}
+                >
+                  {isHub ? 'Gestão' : 'Visualização'}
+                </MenuItem>
+              )}
               <MenuItem>Perfil</MenuItem>
               <MenuDivider />
-              <MenuItem onClick={(handleSignOut)}>Sair</MenuItem>
+              <MenuItem onClick={handleSignOut}>Sair</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
