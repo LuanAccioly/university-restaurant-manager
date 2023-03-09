@@ -13,7 +13,7 @@ import Dish from '../../components/Dish/Dish';
 export const Menu = () => {
   return (
     <Center margin="15px" w="100%">
-      <VStack gap="20px">
+      <VStack gap="20px" w="96%">
         <Flex w="100%" gap="30px">
           <Box
             bgImage="url('https://www.sabornamesa.com.br/media/k2/items/cache/e8658cb4a1b6dba2ad4d07e8c6d174b9_XL.jpg')"
@@ -90,7 +90,7 @@ export const Menu = () => {
             dish="Abobrinha Refogada / Arroz / Feijão Carioca"
             image="https://minhasaude.proteste.org.br/wp-content/uploads/2021/08/arroz-e-feij%C3%A3o.jpg"
           />
-          <Dish
+          {/* <Dish
             title="Salada Crua"
             dish="Mix de Folhas com Frutas"
             image="https://i0.wp.com/panelaterapia.com/wp-content/uploads/2013/06/salada11.jpg?fit=640%2C437&ssl=1"
@@ -99,7 +99,7 @@ export const Menu = () => {
             title="Salada Cozida"
             dish="Beterraba com Gergelim"
             image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSChq6QFxUwIOVgTvHprUyNPGFoj9916tDPkg&usqp=CAU"
-          />
+          /> */}
           {/* <Dish title="Sobremesa" dish="Melancia" image="" /> */}
         </HStack>
       </VStack>
