@@ -9,8 +9,30 @@ import {
   VStack,
 } from '@chakra-ui/layout';
 import Dish from '../../components/Dish/Dish';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import './menu.css';
 
 export const Menu = () => {
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 4,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 4,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
   return (
     <Center margin="15px" w="100%">
       <VStack gap="20px" w="96%">
@@ -60,48 +82,63 @@ export const Menu = () => {
             </Flex>
           </Box>
         </Flex>
-        <HStack spacing="10px">
-          <Dish
-            title="Prato Principal 2"
-            dish="Feijoada"
-            description="Consiste num guisado de feijões-pretos com vários tipos de carne de porco e de boi"
-            image="https://assets.unileversolutions.com/recipes-v2/54349.jpg"
-          />
-          <Dish
-            title="Fast Grill"
-            dish="Festival de Massas"
-            description="Macarrão daquele jeitinho com molho branco, vermelho e algumas opções de carne para acompanhemento."
-            image="https://soubh.uai.com.br/uploads/post/image/5883/main_211902_shutterstock_421827745.jpg"
-          />
-          <Dish
-            title="Na Grelha"
-            dish="Isca de Carne com Pimentões"
-            image="https://www.rbsdirect.com.br/imagesrc/25399331.jpg?w=700"
-            description="Prato feito com tiras finas de carne (geralmente bovina), salteadas em uma frigideira com pimentões picados e temperos, como alho e cebola."
-          />
-          <Dish
-            title="Vegetariano"
-            dish="Estrogonofe no grão de bico"
-            image="https://receitanatureba.com/wp-content/uploads/2018/10/capa-18.jpg"
-            description="Versão vegetariana do prato tradicional russo, feito com grão de bico em vez de carne, e um molho cremoso à base de creme de leite"
-          />
-          <Dish
-            title="Guarnição"
-            dish="Abobrinha Refogada / Arroz / Feijão Carioca"
-            image="https://minhasaude.proteste.org.br/wp-content/uploads/2021/08/arroz-e-feij%C3%A3o.jpg"
-          />
-          {/* <Dish
-            title="Salada Crua"
-            dish="Mix de Folhas com Frutas"
-            image="https://i0.wp.com/panelaterapia.com/wp-content/uploads/2013/06/salada11.jpg?fit=640%2C437&ssl=1"
-          />
-          <Dish
-            title="Salada Cozida"
-            dish="Beterraba com Gergelim"
-            image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSChq6QFxUwIOVgTvHprUyNPGFoj9916tDPkg&usqp=CAU"
-          /> */}
-          {/* <Dish title="Sobremesa" dish="Melancia" image="" /> */}
-        </HStack>
+
+        <Flex w={'100%'} h="400px">
+          <Carousel
+            responsive={responsive}
+            containerClass="carousel-container"
+            swipeable={false}
+            centerMode={true}
+            infinite
+            autoPlay
+            autoPlaySpeed={2500}
+          >
+            <Dish
+              title="Prato Principal 2"
+              dish="Feijoada"
+              description="Consiste num guisado de feijões-pretos com vários tipos de carne de porco e de boi"
+              image="https://assets.unileversolutions.com/recipes-v2/54349.jpg"
+            />
+            <Dish
+              title="Fast Grill"
+              dish="Festival de Massas"
+              description="Macarrão daquele jeitinho com molho branco, vermelho e algumas opções de carne para acompanhemento."
+              image="https://soubh.uai.com.br/uploads/post/image/5883/main_211902_shutterstock_421827745.jpg"
+            />
+            <Dish
+              title="Na Grelha"
+              dish="Isca de Carne com Pimentões"
+              image="https://www.rbsdirect.com.br/imagesrc/25399331.jpg?w=700"
+              description="Prato feito com tiras finas de carne (geralmente bovina), salteadas em uma frigideira com pimentões picados e temperos, como alho e cebola."
+            />
+            <Dish
+              title="Vegetariano"
+              dish="Estrogonofe no grão de bico"
+              image="https://receitanatureba.com/wp-content/uploads/2018/10/capa-18.jpg"
+              description="Versão vegetariana do prato tradicional russo, feito com grão de bico em vez de carne, e um molho cremoso à base de creme de leite"
+            />
+            <Dish
+              title="Guarnição"
+              dish="Abobrinha Refogada / Arroz / Feijão Carioca"
+              image="https://minhasaude.proteste.org.br/wp-content/uploads/2021/08/arroz-e-feij%C3%A3o.jpg"
+            />
+            <Dish
+              title="Salada Crua"
+              dish="Mix de Folhas com Frutas"
+              image="https://i0.wp.com/panelaterapia.com/wp-content/uploads/2013/06/salada11.jpg?fit=640%2C437&ssl=1"
+            />
+            <Dish
+              title="Salada Cozida"
+              dish="Beterraba com Gergelim"
+              image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSChq6QFxUwIOVgTvHprUyNPGFoj9916tDPkg&usqp=CAU"
+            />
+            <Dish
+              title="Salada Cozida"
+              dish="Beterraba com Gergelim"
+              image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSChq6QFxUwIOVgTvHprUyNPGFoj9916tDPkg&usqp=CAU"
+            />
+          </Carousel>
+        </Flex>
       </VStack>
     </Center>
   );
