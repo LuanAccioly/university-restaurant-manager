@@ -12,8 +12,13 @@ import Dish from '../../components/Dish/Dish';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './menu.css';
+import { useColorMode } from '@chakra-ui/react';
 
 export const Menu = () => {
+  const { colorMode } = useColorMode();
+  const imageStyle = {
+    filter: colorMode === 'dark' ? 'brightness(0.7)' : 'brightness(1)',
+  };
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -34,11 +39,12 @@ export const Menu = () => {
     },
   };
   return (
-    <Flex justifyContent="center" w="100%" alignItems="center">
+    <Flex m="15px" w="98%" marginBottom="0px" justifyContent="center">
       <VStack gap="20px" w="96%">
         <Flex w="100%" gap="30px">
           <Box
             bgImage="url('https://www.sabornamesa.com.br/media/k2/items/cache/e8658cb4a1b6dba2ad4d07e8c6d174b9_XL.jpg')"
+            style={imageStyle}
             bgPosition="center"
             bgSize="cover"
             h="380px"
@@ -50,6 +56,7 @@ export const Menu = () => {
               boxSize="100%"
               bgGradient="linear(90deg, rgba(0,0,0,0.6867121848739496) 0%, rgba(0,0,0,0.5158438375350141) 49%, rgba(0,0,0,0) 100%)"
               justifyItems="bottom"
+              style={{ filter: 'brightness(1)' }}
             >
               <Flex h="100%" alignItems="flex-end" padding="40px">
                 <Box color="white">
