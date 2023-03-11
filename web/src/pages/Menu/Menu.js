@@ -34,7 +34,7 @@ export const Menu = () => {
     },
   };
   return (
-    <Center margin="15px" w="100%">
+    <Flex margin="15px" w="100%">
       <VStack gap="20px" w="96%">
         <Flex w="100%" gap="30px">
           <Box
@@ -140,6 +140,6 @@ export const Menu = () => {
           </Carousel>
         </Flex>
       </VStack>
-    </Center>
+    </Flex>
   );
 };

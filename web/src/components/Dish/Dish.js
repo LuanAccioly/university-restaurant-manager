@@ -4,18 +4,20 @@ import { Box, Heading, Text } from '@chakra-ui/layout';
 function Dish({ image, title, dish, description }) {
   return (
     <Box
-      // m="30px"
-      w="330px"
-      h="350px"
+      w={['100%', '330px']}
+      h={['auto', '350px']}
       borderWidth="2px"
       borderRadius="lg"
       overflow="hidden"
+      maxW="100%"
+      mx="auto"
+      my="2%"
     >
       <Box
         bgImage={`url('${image}')`}
         bgPosition="center"
         bgSize="cover"
-        h="200px"
+        h={['150px', '200px']}
         width="100%"
         flex="1"
         // borderRadius="lg"
