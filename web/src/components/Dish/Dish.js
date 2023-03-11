@@ -1,10 +1,15 @@
 import { Image } from '@chakra-ui/image';
 import { Box, Heading, Text } from '@chakra-ui/layout';
+import { useColorMode } from '@chakra-ui/react';
 
 function Dish({ image, title, dish, description }) {
+  const { colorMode } = useColorMode();
+  const imageStyle = {
+    filter: colorMode === 'dark' ? 'brightness(0.7)' : 'brightness(1)',
+  };
   return (
     <Box
-      w={['100%', '85%']}
+      w={['70%', '90%']}
       h={['auto', '95%']}
       borderWidth="2px"
       borderRadius="lg"
@@ -20,6 +25,7 @@ function Dish({ image, title, dish, description }) {
         h={['150px', '200px']}
         width="100%"
         flex="1"
+        style={imageStyle}
         // borderRadius="lg"
       />
       <Box p="5">
