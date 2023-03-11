@@ -4,8 +4,8 @@ import { Box, Heading, Text } from '@chakra-ui/layout';
 function Dish({ image, title, dish, description }) {
   return (
     <Box
-      w={['100%', '330px']}
-      h={['auto', '350px']}
+      w={['100%', '85%']}
+      h={['auto', '95%']}
       borderWidth="2px"
       borderRadius="lg"
       overflow="hidden"

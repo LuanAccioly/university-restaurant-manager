@@ -34,7 +34,7 @@ export const Menu = () => {
     },
   };
   return (
-    <Flex margin="15px" w="100%">
+    <Flex justifyContent="center" w="100%" alignItems="center">
       <VStack gap="20px" w="96%">
         <Flex w="100%" gap="30px">
           <Box
@@ -83,7 +83,7 @@ export const Menu = () => {
           </Box>
         </Flex>
 
-        <Flex w={'100%'} h="400px">
+        <Flex w={'100%'}>
           <Carousel
             responsive={responsive}
             containerClass="carousel-container"
