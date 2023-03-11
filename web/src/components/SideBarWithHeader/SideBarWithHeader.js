@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import {
   IconButton,
   Avatar,
@@ -21,6 +21,12 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  DrawerOverlay,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  Input,
+  DrawerFooter,
 } from '@chakra-ui/react';
 import {
   FiHome,
@@ -46,6 +52,98 @@ const LinkItems = [
   { name: 'Settings', icon: FiSettings },
 ];
 
+function DrawerExample() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
+  const [lunch, setLunch] = useState(0);
+  const [dinner, setDinner] = useState(0);
+
+  return (
+    <>
+      <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+        Comprar
+      </Button>
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+        finalFocusRef={btnRef}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Compra de fichas</DrawerHeader>
+          <Flex w="100%" h="100%" alignItems="center" justifyContent="center">
+            <VStack spacing="90px">
+              <VStack>
+                <HStack spacing="4rem">
+                  <Button
+                    borderRadius="100%"
+                    size="xs"
+                    fontWeight="extrabold"
+                    isDisabled={lunch == 0 ? true : false}
+                    onClick={() => setLunch(lunch - 1)}
+                  >
+                    -
+                  </Button>
+                  <Flex w="80px" justifyContent="center">
+                    <Heading as="h4" size="md">
+                      Almoço
+                    </Heading>
+                  </Flex>
+                  <Button
+                    borderRadius="100%"
+                    size="xs"
+                    fontWeight="extrabold"
+                    onClick={() => setLunch(lunch + 1)}
+                  >
+                    +
+                  </Button>
+                </HStack>
+                <Text fontSize="sm">quantidade: {lunch}</Text>
+              </VStack>
+              <VStack>
+                <HStack spacing="4rem">
+                  <Button
+                    borderRadius="100%"
+                    size="xs"
+                    fontWeight="extrabold"
+                    isDisabled={dinner == 0 ? true : false}
+                    onClick={() => setDinner(dinner - 1)}
+                  >
+                    -
+                  </Button>
+                  <Flex w="80px" justifyContent="center">
+                    <Heading as="h4" size="md">
+                      Jantar
+                    </Heading>
+                  </Flex>
+                  <Button
+                    borderRadius="100%"
+                    size="xs"
+                    fontWeight="extrabold"
+                    onClick={() => setDinner(dinner + 1)}
+                  >
+                    +
+                  </Button>
+                </HStack>
+                <Text fontSize="sm">quantidade: {dinner}</Text>
+              </VStack>
+            </VStack>
+          </Flex>
+          <Flex justifyContent="center" fontWeight="bold">
+            Total: R${dinner * 3 + lunch * 3.5}
+          </Flex>
+          <DrawerFooter>
+            <Button w="100%" colorScheme="blue">
+              Confirmar pagamento
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </>
+  );
+}
 export function SidebarWithHeader({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -250,6 +348,7 @@ export const MobileNav = ({ onOpen, ...rest }) => {
             </MenuList>
           </Menu>
         </Flex>
+        <DrawerExample />
       </HStack>
     </Flex>
   );
