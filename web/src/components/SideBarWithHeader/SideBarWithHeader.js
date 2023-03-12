@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 import {
   IconButton,
   Avatar,
@@ -55,8 +55,7 @@ const LinkItems = [
 function DrawerExample() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
-  const [lunch, setLunch] = useState(0);
-  const [dinner, setDinner] = useState(0);
+  const { lunch, dinner, setDinner, setLunch } = useContext(AuthContext);
 
   return (
     <>
@@ -81,8 +80,8 @@ function DrawerExample() {
                     borderRadius="100%"
                     size="xs"
                     fontWeight="extrabold"
-                    isDisabled={lunch == 0 ? true : false}
-                    onClick={() => setLunch(lunch - 1)}
+                    isDisabled={Number(lunch) == 0 ? true : false}
+                    onClick={() => setLunch(Number(lunch) - 1)}
                   >
                     -
                   </Button>
@@ -95,12 +94,12 @@ function DrawerExample() {
                     borderRadius="100%"
                     size="xs"
                     fontWeight="extrabold"
-                    onClick={() => setLunch(lunch + 1)}
+                    onClick={() => setLunch(Number(lunch) + 1)}
                   >
                     +
                   </Button>
                 </HStack>
-                <Text fontSize="sm">quantidade: {lunch}</Text>
+                <Text fontSize="sm">quantidade: {Number(lunch)}</Text>
               </VStack>
               <VStack>
                 <HStack spacing="4rem">
@@ -108,8 +107,8 @@ function DrawerExample() {
                     borderRadius="100%"
                     size="xs"
                     fontWeight="extrabold"
-                    isDisabled={dinner == 0 ? true : false}
-                    onClick={() => setDinner(dinner - 1)}
+                    isDisabled={Number(dinner) == 0 ? true : false}
+                    onClick={() => setDinner(Number(dinner) - 1)}
                   >
                     -
                   </Button>
@@ -122,17 +121,17 @@ function DrawerExample() {
                     borderRadius="100%"
                     size="xs"
                     fontWeight="extrabold"
-                    onClick={() => setDinner(dinner + 1)}
+                    onClick={() => setDinner(Number(dinner) + 1)}
                   >
                     +
                   </Button>
                 </HStack>
-                <Text fontSize="sm">quantidade: {dinner}</Text>
+                <Text fontSize="sm">quantidade: {Number(dinner)}</Text>
               </VStack>
             </VStack>
           </Flex>
           <Flex justifyContent="center" fontWeight="bold">
-            Total: R${dinner * 3 + lunch * 3.5}
+            Total: R${Number(dinner) * 3 + Number(lunch) * 3.5}
           </Flex>
           <DrawerFooter>
             <Button w="100%" colorScheme="blue">
