@@ -6,5 +6,6 @@ const routes = Router();
 
 routes.post("/", UserController.create)
 routes.get("/", validateToken, UserController.index)
+routes.get("/profile", validateToken, UserController.view)
 
 export default routes;

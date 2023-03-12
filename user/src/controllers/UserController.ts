@@ -58,6 +58,25 @@ class UserController {
         }
     }
 
+    async view(req: Request, res: Response) {
+        const user = req.user;
+        try {
+            if(!user) {
+                return res.status(403).json({error: "Usuário não encontrado",
+                message: "Usuário não encontrado"})
+            }
+
+            const userInfos = await User.findOne({email: user.email})
+
+            return res.json(userInfos);
+        } catch (error) {
+            return res.status(500).json({
+                error: error,
+                message: "Falha ao listar perfil"
+            })
+        }
+    }
+
     async login(req: Request, res: Response) {
         const { email, password } = req.body;
 
