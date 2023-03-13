@@ -52,14 +52,14 @@ const LinkItems = [
   { name: 'Settings', icon: FiSettings },
 ];
 
-function DrawerExample() {
+function SideBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const { lunch, dinner, setDinner, setLunch } = useContext(AuthContext);
 
   return (
     <>
-      <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+      <Button ref={btnRef} colorScheme="green" onClick={onOpen}>
         Comprar
       </Button>
       <Drawer
@@ -141,6 +141,20 @@ function DrawerExample() {
         </DrawerContent>
       </Drawer>
     </>
+  );
+}
+
+function NotAuthButtons() {
+  const navigate = useNavigate();
+  return (
+    <HStack>
+      <Button colorScheme="blue" onClick={() => navigate('/hub/register')}>
+        Registre-se
+      </Button>
+      <Button colorScheme="green" onClick={() => navigate('/hub/login')}>
+        Login
+      </Button>
+    </HStack>
   );
 }
 export function SidebarWithHeader({ children }) {
@@ -246,7 +260,8 @@ const NavItem = ({ icon, children, ...rest }) => {
 
 export const MobileNav = ({ onOpen, ...rest }) => {
   const outlineColor = useColorModeValue('gray.200', 'gray.700');
-  const { signOut, user, isHub, setIsHub } = useContext(AuthContext);
+  const { signOut, user, isHub, setIsHub, isAuthenticated } =
+    useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -347,7 +362,7 @@ export const MobileNav = ({ onOpen, ...rest }) => {
             </MenuList>
           </Menu>
         </Flex>
-        <DrawerExample />
+        <SideBar />
       </HStack>
     </Flex>
   );
