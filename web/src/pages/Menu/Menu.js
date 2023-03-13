@@ -39,9 +39,9 @@ export const Menu = () => {
     },
   };
   return (
-    <Flex m="15px" w="98%" marginBottom="0px" justifyContent="center">
-      <VStack gap="20px" w="96%">
-        <Flex w="100%" gap="30px">
+    <Flex w="100%" justifyContent="center" mt="30px">
+      <VStack gap="20px" w="100%">
+        <Flex w="98.5%" gap="30px">
           <Box
             bgImage="url('https://www.sabornamesa.com.br/media/k2/items/cache/e8658cb4a1b6dba2ad4d07e8c6d174b9_XL.jpg')"
             style={imageStyle}

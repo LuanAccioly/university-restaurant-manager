@@ -9,14 +9,12 @@ function Dish({ image, title, dish, description }) {
   };
   return (
     <Box
-      w={['70%', '90%']}
+      w={['70%', '85%']}
       h={['auto', '95%']}
       borderWidth="2px"
       borderRadius="lg"
       overflow="hidden"
-      maxW="100%"
-      mx="auto"
-      my="2%"
+      maxW="85%"
     >
       <Box
         bgImage={`url('${image}')`}
