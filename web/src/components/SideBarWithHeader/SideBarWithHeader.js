@@ -134,8 +134,14 @@ function SideBar() {
             Total: R${Number(dinner) * 3 + Number(lunch) * 3.5}
           </Flex>
           <DrawerFooter>
-            <Button w="100%" colorScheme="blue">
-              Confirmar pagamento
+            <Button
+              w="100%"
+              colorScheme="blue"
+              isDisabled={
+                Number(lunch) === 0 && Number(dinner) === 0 ? true : false
+              }
+            >
+              Ir para o carrinho
             </Button>
           </DrawerFooter>
         </DrawerContent>
