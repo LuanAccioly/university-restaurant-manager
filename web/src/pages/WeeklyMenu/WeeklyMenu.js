@@ -15,6 +15,33 @@ import { useState } from 'react';
 
 export const WeeklyMenu = () => {
   const colorMode = useColorMode();
+  const [selectedDate, setSelectedDate] = useState('');
+  const dayOfMonth = selectedDate;
+
+  function handleSelectedDate(event) {
+    setSelectedDate(event.target.value);
+  }
+
+  function getDayOfWeek() {
+    const daysOfWeek = [
+      'Domingo',
+      'Segunda',
+      'Terça',
+      'Quarta',
+      'Quinta',
+      'Sexta',
+      'Sábado',
+    ];
+    const date = selectedDate ? new Date(selectedDate) : new Date();
+
+    const dayOfWeek = daysOfWeek[date.getDay()];
+    console.log(
+      `dayofWeek: ${dayOfWeek} | data + 1: ${
+        date.getDate() + 1
+      } | hora: ${date.getHours()} `
+    );
+    return dayOfWeek;
+  }
 
   const options = [
     {
@@ -44,9 +71,11 @@ export const WeeklyMenu = () => {
             placeholder="Select Date and Time"
             size="md"
             type="date"
+            value={selectedDate}
+            onChange={handleSelectedDate}
           />
           <Heading as="h4" size="md">
-            Segunda-Feira
+            {getDayOfWeek()}
           </Heading>
           <Box w="auto" minW="160px" h="30px">
             <SwitchSelector
