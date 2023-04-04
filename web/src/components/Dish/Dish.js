@@ -14,7 +14,7 @@ function Dish({ image, title, dish, description }) {
       borderWidth="2px"
       borderRadius="lg"
       overflow="hidden"
-      maxW="85%"
+      maxW="330px"
     >
       <Box
         bgImage={`url('${image}')`}
