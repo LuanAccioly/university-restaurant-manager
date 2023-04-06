@@ -49,10 +49,10 @@ export const Menu = () => {
             bgSize="cover"
             h="380px"
             flex="1"
-            borderRadius="lg"
+            borderRadius="15px"
           >
             <Box
-              borderRadius="lg"
+              borderRadius="15px"
               boxSize="100%"
               bgGradient="linear(90deg, rgba(0,0,0,0.6867121848739496) 0%, rgba(0,0,0,0.5158438375350141) 49%, rgba(0,0,0,0) 100%)"
               justifyItems="bottom"
@@ -71,7 +71,7 @@ export const Menu = () => {
               </Flex>
             </Box>
           </Box>
-          <Box bg="green.100" w="300px" borderRadius="lg" p="30px">
+          <Box bg="green.100" w="300px" borderRadius="15px" p="30px">
             <Image
               src="https://cdn-icons-png.flaticon.com/512/2738/2738730.png"
               boxSize="120px"

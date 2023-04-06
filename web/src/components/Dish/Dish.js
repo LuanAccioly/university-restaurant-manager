@@ -12,7 +12,7 @@ function Dish({ image, title, dish, description }) {
       w={['70%', '85%']}
       h={['auto', '95%']}
       borderWidth="2px"
-      borderRadius="lg"
+      borderRadius="15px"
       overflow="hidden"
       maxW="330px"
     >

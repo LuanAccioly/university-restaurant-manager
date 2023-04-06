@@ -32,12 +32,18 @@ function NewDishPreview({ image, title, dish, description }) {
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent p="15px" w="400px" gap="10px" h="500px">
+        <ModalContent
+          p="15px"
+          w="400px"
+          gap="10px"
+          h="500px"
+          borderRadius="20px"
+        >
           <Box
             w="100%"
             h={['auto', '95%']}
             borderWidth="2px"
-            borderRadius="lg"
+            borderRadius="20px"
             overflow="hidden"
           >
             <Box
