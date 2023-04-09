@@ -118,7 +118,7 @@ export const DishRegistration = ({ image }) => {
             placeholder="Descrição do prato"
             onChange={handleDescriptionChange}
           />
-          <Flex w="100%" justifyContent="end" gap="5px">
+          <Flex w="100%" justifyContent="end" gap="15px">
             <NewDishPreview
               title="Fast Grill"
               dish={dishName}
