@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   IconButton,
   Avatar,
@@ -56,6 +56,11 @@ function SideBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const { lunch, dinner, setDinner, setLunch } = useContext(AuthContext);
+  const [totalTickets, setTotalTickets] = useState(lunch * 3.5 + dinner * 3);
+
+  useEffect(() => {
+    setTotalTickets(lunch * 3.5 + dinner * 3);
+  }, [lunch, dinner]);
 
   return (
     <>
@@ -131,7 +136,7 @@ function SideBar() {
             </VStack>
           </Flex>
           <Flex justifyContent="center" fontWeight="bold">
-            Total: R${Number(dinner) * 3 + Number(lunch) * 3.5}
+            Total: R${Number(totalTickets)}
           </Flex>
           <DrawerFooter>
             <Button
