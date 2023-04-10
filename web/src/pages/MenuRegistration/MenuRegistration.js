@@ -1,6 +1,7 @@
 import {
   Button,
   Center,
+  Checkbox,
   Flex,
   Heading,
   HStack,
@@ -14,6 +15,8 @@ import { useEffect, useState } from 'react';
 export const MenuRegistration = () => {
   const [selectedDate, setSelectedDate] = useState('');
   const [dayOfWeek, setDayOfWeek] = useState('');
+  const [lunchCheckbox, setLunchCheckbox] = useState(false);
+  const [dinnerCheckbox, setDinnerCheckbox] = useState(false);
 
   useEffect(() => {
     function getDayOfWeek() {
@@ -33,6 +36,16 @@ export const MenuRegistration = () => {
     }
     setDayOfWeek(getDayOfWeek());
   }, [selectedDate]);
+
+  const handleLunchChange = event => {
+    setLunchCheckbox(event.target.checked);
+    setDinnerCheckbox(false);
+  };
+
+  const handleDinnerChange = event => {
+    setDinnerCheckbox(event.target.checked);
+    setLunchCheckbox(false);
+  };
 
   function handleSelectedDate(event) {
     setSelectedDate(event.target.value);
@@ -155,7 +168,18 @@ export const MenuRegistration = () => {
               </Select>
             </Stack>
           </HStack>
-          <Flex w="100%" justifyContent="end">
+          <Flex w="100%" justifyContent="space-between">
+            <Flex w="12rem" gap="2rem">
+              <Checkbox isChecked={lunchCheckbox} onChange={handleLunchChange}>
+                Almoço
+              </Checkbox>
+              <Checkbox
+                isChecked={dinnerCheckbox}
+                onChange={handleDinnerChange}
+              >
+                Jantar
+              </Checkbox>
+            </Flex>
             <Button colorScheme="blue">Cadastrar</Button>
           </Flex>
         </VStack>
