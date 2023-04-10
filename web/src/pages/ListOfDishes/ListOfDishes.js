@@ -11,12 +11,19 @@ import {
   Th,
   Thead,
   Tr,
+  VStack,
 } from '@chakra-ui/react';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 export const ListOfDishes = () => {
   return (
     <Flex direction="column" w="100%" p="20px">
-      <Heading>Visualizar pratos</Heading>
+      <Flex w="100%" alignItems="center" justifyContent="space-between">
+        <Heading>Visualizar pratos</Heading>
+        <Button leftIcon={<AiOutlinePlus />} w="11rem" colorScheme="orange">
+          Cadastrar prato
+        </Button>
+      </Flex>
       <TableContainer pt="30px">
         <Table variant="simple">
           <Thead>
