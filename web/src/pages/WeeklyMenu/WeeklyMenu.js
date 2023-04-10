@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   color,
   Flex,
   Heading,
@@ -78,7 +79,9 @@ export const WeeklyMenu = () => {
           <Heading as="h4" size="md">
             {dayOfWeek}
           </Heading>
-          <Box w="auto" minW="160px" h="30px">
+          <Flex alignItems="center" gap="20px" minW="160px" h="30px">
+            <Button w="200px">Cadastre-se</Button>
+            <Button w="100px">Login</Button>
             <SwitchSelector
               options={options}
               initialSelectedIndex={initialSelectedIndex}
@@ -86,7 +89,7 @@ export const WeeklyMenu = () => {
               border="5"
               fontColor={'#f5f6fa'}
             />
-          </Box>
+          </Flex>
         </Flex>
         <Menu />
       </VStack>
