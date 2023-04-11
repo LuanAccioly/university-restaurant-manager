@@ -39,20 +39,18 @@ import {
   FiShoppingCart,
   FiChevronDown,
 } from 'react-icons/fi';
-import {
-  BiDish,
-  BiFoodMenu
-} from 'react-icons/bi';
+import { BiDish, BiFoodMenu } from 'react-icons/bi';
+import { GrTransaction } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 import { AuthContext } from '../../contexts/AuthContext';
 
-
 const LinkItems = [
   { name: 'Home', icon: FiHome, ref: '/' },
   { name: 'Pratos', icon: BiDish, ref: '/dish' },
   { name: 'Cardápios', icon: BiFoodMenu, ref: '/menu' },
+  { name: 'Transações', icon: GrTransaction, ref: '/transactions' },
 ];
 
 function SideBar() {
@@ -238,7 +236,7 @@ const NavItem = ({ icon, children, refLink, ...rest }) => {
   return (
     <Link
       //href={window.location.href+refLink}
-      onClick={() => navigate("/cal"+refLink)}
+      onClick={() => navigate('/cal' + refLink)}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}
     >
@@ -371,7 +369,7 @@ export const MobileNav = ({ onOpen, ...rest }) => {
               )}
               <MenuItem>Perfil</MenuItem>
               <MenuDivider />
-              <MenuItem onClick={()=> handleSignOut()}>Sair</MenuItem>
+              <MenuItem onClick={() => handleSignOut()}>Sair</MenuItem>
             </MenuList>
           </Menu>
         </Flex>

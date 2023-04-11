@@ -5,10 +5,7 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { Login } from './pages/Login/Login';
 import { Register } from './pages/Register/Register';
 import theme from './styles/theme.js';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Layout } from './pages/Layout';
 import { ListOfDishes } from './pages/ListOfDishes/ListOfDishes';
 import { AuthProvider } from './contexts/AuthContext';
@@ -17,53 +14,59 @@ import { Menu } from './pages/Menu/Menu';
 import { DishRegistration } from './pages/DishRegistration/DishRegistration';
 import { DishEdit } from './pages/DishEdit/DishEdit';
 import { MenuRegistration } from './pages/MenuRegistration/MenuRegistration';
+import { ListOfTransactions } from './pages/ListOfTransactions/ListOfTransactions';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 
-const routes = createBrowserRouter([
-  {
-    path: '/hub',
-    element: <Layout />,
-    children: [
-      { index: true, element: <Home /> },
-      {
-        path: 'register',
-        element: <Register />,
-      },
-      {
-        path: 'login',
-        element: <Login />,
-      },
-    ],
-  },
-  {
-    path: '/cal',
-    element: <Layout />,
-    children: [
-      { index: true, element: <Home /> },
-      {
-        path: 'dish',
-        element: <ListOfDishes />,
-      },
-      {
-        path: 'dish/create',
-        element: <DishRegistration />,
-      },
-      {
-        path: 'dish/:dishId',
-        element: <DishEdit />,
-      },
-      {
-        path: 'menu',
-        element: <MenuRegistration />,
-      },
-    ],
-  },
-]/* , {
+const routes = createBrowserRouter(
+  [
+    {
+      path: '/hub',
+      element: <Layout />,
+      children: [
+        { index: true, element: <Home /> },
+        {
+          path: 'register',
+          element: <Register />,
+        },
+        {
+          path: 'login',
+          element: <Login />,
+        },
+      ],
+    },
+    {
+      path: '/cal',
+      element: <Layout />,
+      children: [
+        { index: true, element: <Home /> },
+        {
+          path: 'dish',
+          element: <ListOfDishes />,
+        },
+        {
+          path: 'dish/create',
+          element: <DishRegistration />,
+        },
+        {
+          path: 'dish/:dishId',
+          element: <DishEdit />,
+        },
+        {
+          path: 'menu',
+          element: <MenuRegistration />,
+        },
+        {
+          path: 'transactions',
+          element: <ListOfTransactions />,
+        },
+      ],
+    },
+  ] /* , {
   basename: '/hub'
-} */);
-
+} */
+);
 
 const appTheme = extendTheme(theme);
 
