@@ -6,10 +6,12 @@ import logging
 from dataclasses import dataclass
 from flask import Flask, jsonify, request
 from enum import Enum
+from flask_cors import CORS
 import random
 import time
 
 app = Flask(__name__)
+CORS(app)
 
 gunicorn_logger = logging.getLogger('gunicorn.error')
 app.logger.handlers = gunicorn_logger.handlers
