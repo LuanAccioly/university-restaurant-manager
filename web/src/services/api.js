@@ -1,19 +1,23 @@
-import axios from 'axios'
-import { parseCookies } from 'nookies'
+import axios from 'axios';
+import { parseCookies } from 'nookies';
 
-const { 'ru.token': token } = parseCookies()
+const { 'ru.token': token } = parseCookies();
 
 const userApi = axios.create({
-    baseURL: 'http://localhost:3001'
-})
+  baseURL: 'http://localhost:3001',
+});
 
 const cozinhaApi = axios.create({
-    baseURL: 'http://localhost:3002'
-})
+  baseURL: 'http://localhost:3002',
+});
 
-if(token) {
-    userApi.defaults.headers['Authorization'] = `Bearer ${token}`
-    cozinhaApi.defaults.headers['Authorization'] = `Bearer ${token}`
+const pagamentoApi = axios.create({
+  baseURL: 'http://localhost:5000',
+});
+
+if (token) {
+  userApi.defaults.headers['Authorization'] = `Bearer ${token}`;
+  cozinhaApi.defaults.headers['Authorization'] = `Bearer ${token}`;
 }
 
-export {userApi, cozinhaApi}
+export { userApi, cozinhaApi, pagamentoApi };
