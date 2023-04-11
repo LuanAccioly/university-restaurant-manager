@@ -3,6 +3,8 @@ import {setCookie, parseCookies, destroyCookie} from 'nookies'
 import { recoverUser, signInRequest } from "../services/auth";
 import { userApi } from "../services/api";
 import useLocalStorage from "use-local-storage";
+import cookie from 'js-cookie';
+
 
 export const AuthContext = createContext({})
 
@@ -19,6 +21,9 @@ export function AuthProvider ({children}) {
         const { 'ru.token': token } = parseCookies()
         if(token) {
             recoverUser().then(response => {
+                if(!response) {
+                    signOut(); 
+                }
                 setUser(response)
                 setIsLoading(false)
             });   
@@ -42,8 +47,8 @@ export function AuthProvider ({children}) {
         setUser(user)
     }
 
-    function signOut () {
-        destroyCookie(undefined, 'ru.token')
+    async function signOut () {
+        await destroyCookie(undefined, 'ru.token')
         setDinner(0)
         setLunch(0)
         setUser(null)

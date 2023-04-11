@@ -10,8 +10,13 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { Layout } from './pages/Layout';
+import { ListOfDishes } from './pages/ListOfDishes/ListOfDishes';
 import { AuthProvider } from './contexts/AuthContext';
 import { Home } from './pages/Home/Home';
+import { Menu } from './pages/Menu/Menu';
+import { DishRegistration } from './pages/DishRegistration/DishRegistration';
+import { DishEdit } from './pages/DishEdit/DishEdit';
+import { MenuRegistration } from './pages/MenuRegistration/MenuRegistration';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
@@ -38,12 +43,20 @@ const routes = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       {
-        path: 'register',
-        element: <Register />,
+        path: 'dish',
+        element: <ListOfDishes />,
       },
       {
-        path: 'login',
-        element: <Login />,
+        path: 'dish/create',
+        element: <DishRegistration />,
+      },
+      {
+        path: 'dish/:dishId',
+        element: <DishEdit />,
+      },
+      {
+        path: 'menu',
+        element: <MenuRegistration />,
       },
     ],
   },

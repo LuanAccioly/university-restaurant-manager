@@ -12,7 +12,9 @@ import {
 } from '@chakra-ui/react';
 import { Menu } from '../Menu/Menu';
 import SwitchSelector from 'react-switch-selector';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export const WeeklyMenu = () => {
   const colorMode = useColorMode();
@@ -64,6 +66,10 @@ export const WeeklyMenu = () => {
   );
   console.log(colorMode);
 
+  const { isAuthenticated, user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+
   return (
     <Flex w="100%">
       <VStack w="100%">
@@ -79,9 +85,11 @@ export const WeeklyMenu = () => {
           <Heading as="h4" size="md">
             {dayOfWeek}
           </Heading>
-          <Flex alignItems="center" gap="20px" minW="160px" h="30px">
-            <Button w="200px">Cadastre-se</Button>
-            <Button w="100px">Login</Button>
+          <Flex alignItems="center" gap="20px" minW="160px" h="30px" zIndex={'base'}>
+            {!isAuthenticated && <>
+              <Button w="200px" onClick={() => navigate('/hub/register')}>Cadastre-se</Button>
+            <Button w="100px" onClick={() => navigate('/hub/login')}>Login</Button>
+            </>}
             <SwitchSelector
               options={options}
               initialSelectedIndex={initialSelectedIndex}

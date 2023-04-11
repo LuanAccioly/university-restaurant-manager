@@ -14,13 +14,40 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { useEffect, useState } from 'react';
+import { Center, Spinner } from '@chakra-ui/react';
+import { cozinhaApi } from '../../services/api';
+import { useNavigate } from 'react-router';
 
 export const ListOfDishes = () => {
+  const navigate = useNavigate();
+
+  const [dishes, setDishes] = useState([])
+  const [loading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+   async function getDishes() {
+      const { data } = await cozinhaApi.get("/pratos/index")
+      console.log(data)
+      setDishes(data)
+      setIsLoading(false)
+    }
+
+    getDishes();
+
+  }, [])
+
+  if(loading) {
+    return <Center h={'100vh'}>
+      <Spinner/>
+    </Center>
+  }
+
   return (
     <Flex direction="column" w="100%" p="20px">
       <Flex w="100%" alignItems="center" justifyContent="space-between">
         <Heading>Visualizar pratos</Heading>
-        <Button leftIcon={<AiOutlinePlus />} w="11rem" colorScheme="orange">
+        <Button leftIcon={<AiOutlinePlus />} w="11rem" colorScheme="orange" onClick={() => navigate('/cal/dish/create')}>
           Cadastrar prato
         </Button>
       </Flex>
@@ -34,9 +61,10 @@ export const ListOfDishes = () => {
               <Th textAlign="end">Edição</Th>
             </Tr>
           </Thead>
-          <Tbody>
+          {dishes?.map((dish, index) => (
+            <Tbody key={index}>
             <Tr>
-              <Td>Feijoada</Td>
+              <Td>{dish.name}</Td>
               <Td
                 style={{
                   overflow: 'hidden',
@@ -44,21 +72,15 @@ export const ListOfDishes = () => {
                   maxWidth: '300px',
                 }}
               >
-                Consiste num guisado de feijões-pretos com vários tipos de carne
-                de porco e de boiConsiste num guisado de feijões-pretos com
-                vários tipos de carne de porco e de boiConsiste num guisado de
-                feijões-pretos com vários tipos de carne de porco e de
-                boiConsiste num guisado de feijões-pretos com vários tipos de
-                carne de porco e de boiConsiste num guisado de feijões-pretos
-                com vários tipos de carne de porco e de boiConsiste num guisado
-                de feijões-pretos com vários tipos de carne de porco e de boi
+                {dish.description}
               </Td>
-              <Td>Comida</Td>
+              <Td>{dish.type}</Td>
               <Td textAlign="end">
-                <Button>Editar</Button>
+                <Button onClick={() => navigate('/cal/dish/'+dish._id)}>Editar</Button>
               </Td>
             </Tr>
           </Tbody>
+          ))}
         </Table>
       </TableContainer>
     </Flex>

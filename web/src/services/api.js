@@ -7,8 +7,13 @@ const userApi = axios.create({
     baseURL: 'http://localhost:3001'
 })
 
+const cozinhaApi = axios.create({
+    baseURL: 'http://localhost:3002'
+})
+
 if(token) {
     userApi.defaults.headers['Authorization'] = `Bearer ${token}`
+    cozinhaApi.defaults.headers['Authorization'] = `Bearer ${token}`
 }
 
-export {userApi}
+export {userApi, cozinhaApi}

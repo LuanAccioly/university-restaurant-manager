@@ -17,6 +17,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
+  Spinner,
   Text,
   Textarea,
   useColorMode,
@@ -27,58 +28,29 @@ import NormalInput from '../../components/NormalInput/NormalInput';
 import Diamond from '../../assets/images/dish.png';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BsTable } from 'react-icons/bs';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Dish from '../../components/Dish/Dish';
 import NewDishPreview from '../../components/NewDishPreview/NewDishPreview';
 import { cozinhaApi } from '../../services/api';
 import {useToast} from '@chakra-ui/react'
 import { useNavigate } from 'react-router';
+import { useParams } from 'react-router-dom';
 
 
-export const DishRegistration = ({ image }) => {
+
+export const DishEdit = ({ image }) => {
+  const { dishId } = useParams();
+
+  console.log(dishId, 'aaaa')
+
   const [imageUp, setImageUp] = useState(null);
   const [preview, setPreview] = useState(null);
   const toast = useToast();
-
-
-
-  function FileInputButton() {
-    const fileInputRef = useRef(null);
-  
-    const handleButtonClick = () => {
-      fileInputRef.current.click();
-    };
-  
-    const handleFileInputChange = event => {
-      const selectedImage = event.target.files[0];
-      setImageUp(selectedImage);
-      setPreview(URL.createObjectURL(selectedImage));
-      // Faça algo com o arquivo selecionado aqui, por exemplo, carregue-o em uma tag <img> ou envie-o para um servidor.
-    };
-  
-    return (
-      <>
-        <Button
-          leftIcon={<AiOutlineCloudUpload />}
-          onClick={handleButtonClick}
-          colorScheme="orange"
-        >
-          Imagem
-        </Button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          onChange={handleFileInputChange}
-          style={{ display: 'none' }}
-        />
-      </>
-    );
-  }
-
+  const [loading, setIsLoading] = useState(true)
   const [dishName, setDishName] = useState('');
   const [dishDescription, setDishDescription] = useState('');
   const [dishType, setDishType] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
   const [nutriTable, setNutriTable] = useState({
     porcao: '',
     valor_ener: '',
@@ -116,8 +88,58 @@ export const DishRegistration = ({ image }) => {
     },
   });
 
-
   const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    async function getDishes() {
+       const { data } = await cozinhaApi.get("/pratos/"+dishId)
+       console.log(data)
+       setDishName(data.name)
+       setDishDescription(data.description)
+       setDishType(data.type)
+       setImgUrl("http://localhost:3002/"+data.picture)
+       setNutriTable(data.nutri_table)
+       setIsLoading(false)
+     }
+ 
+     getDishes();
+ 
+   }, [])
+
+
+  function FileInputButton() {
+    const fileInputRef = useRef(null);
+  
+    const handleButtonClick = () => {
+      fileInputRef.current.click();
+    };
+  
+    const handleFileInputChange = event => {
+      const selectedImage = event.target.files[0];
+      setImageUp(selectedImage);
+      setPreview(URL.createObjectURL(selectedImage));
+      // Faça algo com o arquivo selecionado aqui, por exemplo, carregue-o em uma tag <img> ou envie-o para um servidor.
+    };
+  
+    return (
+      <>
+        <Button
+          leftIcon={<AiOutlineCloudUpload />}
+          onClick={handleButtonClick}
+          colorScheme="orange"
+        >
+          Imagem
+        </Button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFileInputChange}
+          style={{ display: 'none' }}
+        />
+      </>
+    );
+  }
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
@@ -136,7 +158,7 @@ export const DishRegistration = ({ image }) => {
   const handleSubmit = async () => {
     setIsSaving(true)
 
-    if(!dishName || !dishDescription || !imageUp || !dishType) {
+    if(!dishName || !dishDescription || !dishType) {
       toast({
         title: `Preencha todos os campos`,
         position: 'top-right',
@@ -150,19 +172,21 @@ export const DishRegistration = ({ image }) => {
     const prato = new FormData();
     prato.append('name', dishName);
     prato.append('description', dishDescription);
-    prato.append('nutri_table', JSON.stringify(nutriTable));
-    prato.append('image', imageUp);
+    prato.append('nutri_table', {foo: 'boo'});
+    if(imageUp) {
+      prato.append('image', imageUp);
+    }
     prato.append('type', dishType);
   
     try {
-      const { data } = await cozinhaApi.post("/pratos/create", prato, {
+      const { data } = await cozinhaApi.put("/pratos/update/"+dishId, prato, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
 
       toast({
-        title: `Prato cadastrado com sucesso!`,
+        title: `Prato Atualizado com sucesso!`,
         position: 'top-right',
         status: 'success',
         isClosable: true,
@@ -175,7 +199,7 @@ export const DishRegistration = ({ image }) => {
     } catch (error) {
       console.error(error);
       toast({
-        title: `Erro ao cadastrar prato`,
+        title: `Erro ao atualizar prato`,
         position: 'top-right',
         status: 'error',
         isClosable: true,
@@ -186,8 +210,11 @@ export const DishRegistration = ({ image }) => {
     }
   }
 
-  console.log(nutriTable);
-
+  if(loading) {
+    return <Center h={'100vh'}>
+      <Spinner/>
+    </Center>
+  }
 
   function changeNutriTable(value, key, keyOpt){
     let nutriTableCopy = {...nutriTable}
@@ -215,7 +242,7 @@ export const DishRegistration = ({ image }) => {
         />
       </Box>
       <Box flex={1} mt="20px">
-        <Heading>Cadastro de Prato</Heading>
+        <Heading>Edição de Prato</Heading>
         <VStack w="98%" gap="40px" mt="50px">
           <NormalInput title="Nome" onChange={(event) => setDishName(event.target.value)} value={dishName} />
           <HStack w="100%">
@@ -238,7 +265,7 @@ export const DishRegistration = ({ image }) => {
               title="Fast Grill"
               dish={dishName}
               description={dishDescription}
-              image={preview}
+              image={imgUrl}
             />
             <Button
               onClick={onOpen}
@@ -344,7 +371,7 @@ export const DishRegistration = ({ image }) => {
           </Modal>
         </VStack>
         <Box mt="5%" textAlign="right" w="98%">
-          <Button colorScheme="green" onClick={() => handleSubmit()} disabled={isSaving}>Cadastrar prato</Button>
+          <Button colorScheme="green" onClick={() => handleSubmit()} disabled={isSaving}>Atualizar prato</Button>
         </Box>
       </Box>
     </Flex>

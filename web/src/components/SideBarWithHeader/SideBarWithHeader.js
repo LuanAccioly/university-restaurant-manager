@@ -39,17 +39,20 @@ import {
   FiShoppingCart,
   FiChevronDown,
 } from 'react-icons/fi';
+import {
+  BiDish,
+  BiFoodMenu
+} from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 import { AuthContext } from '../../contexts/AuthContext';
 
+
 const LinkItems = [
-  { name: 'Home', icon: FiHome },
-  { name: 'Trending', icon: FiTrendingUp },
-  { name: 'Explore', icon: FiCompass },
-  { name: 'Favourites', icon: FiStar },
-  { name: 'Settings', icon: FiSettings },
+  { name: 'Home', icon: FiHome, ref: '/' },
+  { name: 'Pratos', icon: BiDish, ref: '/dish' },
+  { name: 'Cardápios', icon: BiFoodMenu, ref: '/menu' },
 ];
 
 function SideBar() {
@@ -171,7 +174,7 @@ function NotAuthButtons() {
 export function SidebarWithHeader({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+    <Box minH="100vh" bg={useColorModeValue('white', 'gray.900')}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: 'none', md: 'block' }}
@@ -202,8 +205,7 @@ export function SidebarWithHeader({ children }) {
 const SidebarContent = ({ onClose, ...rest }) => {
   return (
     <Box
-      transition="3s ease"
-      bg={useColorModeValue('white', 'gray.900')}
+      bg={useColorModeValue('gray.200', 'gray.900')}
       borderRight="1px"
       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
       w={{ base: 'full', md: 60 }}
@@ -220,12 +222,9 @@ const SidebarContent = ({ onClose, ...rest }) => {
           onClick={onClose}
           bg="blue"
         />
-        <Button bg="blue" onClick={onClose}>
-          dsad
-        </Button>
       </Flex>
       {LinkItems.map(link => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} refLink={link.ref}>
           {link.name}
         </NavItem>
       ))}
@@ -233,10 +232,13 @@ const SidebarContent = ({ onClose, ...rest }) => {
   );
 };
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({ icon, children, refLink, ...rest }) => {
+  const navigate = useNavigate();
+
   return (
     <Link
-      href="#"
+      //href={window.location.href+refLink}
+      onClick={() => navigate("/cal"+refLink)}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}
     >
@@ -277,7 +279,7 @@ export const MobileNav = ({ onOpen, ...rest }) => {
   const navigate = useNavigate();
 
   async function handleSignOut() {
-    signOut();
+    await signOut();
     navigate('/hub');
   }
 
@@ -361,7 +363,7 @@ export const MobileNav = ({ onOpen, ...rest }) => {
                 <MenuItem
                   onClick={() => {
                     navigate(isHub ? '/cal' : '/hub');
-                    setIsHub(isHub ? false : true);
+                    setIsHub(!isHub);
                   }}
                 >
                   {isHub ? 'Gestão' : 'Visualização'}
@@ -369,7 +371,7 @@ export const MobileNav = ({ onOpen, ...rest }) => {
               )}
               <MenuItem>Perfil</MenuItem>
               <MenuDivider />
-              <MenuItem onClick={handleSignOut}>Sair</MenuItem>
+              <MenuItem onClick={()=> handleSignOut()}>Sair</MenuItem>
             </MenuList>
           </Menu>
         </Flex>

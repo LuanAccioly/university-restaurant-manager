@@ -1,12 +1,25 @@
-import { Box, Center, Checkbox, Flex, FormControl, FormLabel, Heading, HStack, Input, VStack } from "@chakra-ui/react"
+import { Box, Button, Center, Checkbox, Flex, FormControl, FormLabel, Heading, HStack, Input, useToast, VStack } from "@chakra-ui/react"
 import React, { useEffect, useState, useContext } from "react";
 import { EmailInput } from "../../components/EmailInput/EmailInput"
 import NormalInput from "../../components/NormalInput/NormalInput";
 import { AuthContext } from "../../contexts/AuthContext";
+import { userApi } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
+    const toast = useToast();
+    const navigate = useNavigate();
+
+    const [isSaving, setIsSaving] = useState(false);
+
+
     const [registred, setRegistred] = React.useState(true)
     const [matricula, setMatricula] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [secondName, setSecondName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
     const {signIn, isAuthenticated} = useContext(AuthContext)
 
 
@@ -15,6 +28,71 @@ export const Register = () => {
           setMatricula('');
       }
   }, [registred])
+
+  const handleSubmit = async () => {
+    //setIsSaving(true)
+
+    console.log(firstName, secondName, email, password, confirmPassword)
+
+    if(!firstName || !secondName || !email || !password || !confirmPassword) {
+      toast({
+        title: `Preencha todos os campos`,
+        position: 'top-right',
+        status: 'error',
+        isClosable: true,
+      })
+
+      return;
+    }
+
+    if(password !== confirmPassword) {
+        toast({
+          title: `Senhas não batem`,
+          position: 'top-right',
+          status: 'error',
+          isClosable: true,
+        })
+  
+        return;
+      }
+
+      const user = {
+        name: firstName.concat(' ', secondName),
+        email: email,
+        password: password,
+        registration: matricula || undefined,
+        manager: false,
+      }
+  
+  
+    try {
+      const { data } = await userApi.post("/user/", user)
+
+      toast({
+        title: `Usuário registrado com sucesso!`,
+        position: 'top-right',
+        status: 'success',
+        isClosable: true,
+      })
+
+      setTimeout(() => {
+        navigate('/hub/')
+      }, 1000);
+      // handle successful response
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: `Erro ao registrar usuário`,
+        position: 'top-right',
+        status: 'error',
+        isClosable: true,
+      })
+      
+    } finally {
+      //setIsSaving(false)
+    }
+  }
+
     return(
 
         <Flex size="100vh" h={isAuthenticated ? "92vh" : '100vh'}>
@@ -29,24 +107,24 @@ export const Register = () => {
                 <VStack  mt={50} spacing={"30px"}>
                     <HStack spacing={3} w={"100%"}>
                         <Box flex={1}>
-                            <NormalInput title="Primeiro nome"/>
+                            <NormalInput title="Primeiro nome" value={firstName} onChange={(event) => setFirstName(event.target.value)}/>
                         </Box>
                         <Box flex={1}>
-                            <NormalInput title="Segundo nome"/>
+                            <NormalInput title="Segundo nome" value={secondName} onChange={(event) => setSecondName(event.target.value)}/>
                         </Box>
                     </HStack>
-                    <EmailInput/>
+                    <EmailInput value={email} onChange={(event) => setEmail(event.target.value)} />
                     <Checkbox 
                         defaultChecked 
                         w={"100%"} 
                         isChecked={registred}
                         onChange={(e) => {setRegistred(e.target.checked)}}>
-                        Sou alune matriculade na UFRPE
+                        Sou aluno matriculado na UFRPE
                     </Checkbox>
                     <HStack spacing={30} w={"100%"}>
                         <Box flex={1}>
                           <FormControl isRequired isDisabled={!registred ? true : false}>
-                              <FormLabel>Matrícula </FormLabel>
+                              <FormLabel>Matrícula</FormLabel>
                               <Input 
                               value={matricula}
                               onChange={e => setMatricula(e.target.value)}
@@ -54,9 +132,13 @@ export const Register = () => {
                           </FormControl>
                         </Box>
                         <Box flex={1}>
-                            <NormalInput title="Suas lamúrias:"/>
+                            <NormalInput title="Senha" value={password} onChange={(event) => setPassword(event.target.value)} type={'password'} />
+                        </Box>
+                        <Box flex={1}>
+                            <NormalInput title="Confirmar senha" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} type={'password'} />
                         </Box>
                     </HStack>
+                    <Button onClick={() => handleSubmit()}>Registrar</Button>
                 </VStack>
 
             </Box>

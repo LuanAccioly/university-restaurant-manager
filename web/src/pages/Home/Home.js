@@ -10,15 +10,13 @@ export const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <Flex h={isAuthenticated ? '92vh' : '100vh'}>
+      <>
       {isAuthenticated ? (
         <WeeklyMenu />
       ) : (
-        <Center w={'100%'} bg={'pink.200'}>
-          <p>NAO LOGADO</p>
-        </Center>
+        <WeeklyMenu />
       )}
-    </Flex>
+      </>
   );
 };
 export default Home;

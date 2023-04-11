@@ -5,6 +5,7 @@ export interface Prato {
     description: string;
     picture: string;
     nutri_table: any;
+    type: string;
 }
 
 export interface PratoDocument extends Prato, mongoose.Document {
@@ -15,6 +16,10 @@ export interface PratoDocument extends Prato, mongoose.Document {
 
 const pratoSchema = new mongoose.Schema({
     name:{
+        type: String,
+        required: true,
+    },
+    type:{
         type: String,
         required: true,
     },

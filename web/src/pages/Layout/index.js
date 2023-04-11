@@ -3,24 +3,36 @@ import { Outlet } from 'react-router-dom';
 import { useNavigate, useLocation, redirect } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { MobileNav, SidebarWithHeader } from '../../components/SideBarWithHeader/SideBarWithHeader';
-import { Center, Spinner } from '@chakra-ui/react';
+import { Center, Flex, Spinner } from '@chakra-ui/react';
 
 
 export const Layout = () => {
-  const {isAuthenticated, user, isHub, isLoading} = useContext(AuthContext)
+  const {isAuthenticated, user, isHub, isLoading, setIsHub} = useContext(AuthContext)
   const navigate = useNavigate();
   const location = useLocation();
 
+  console.log(isAuthenticated)
+  console.log(user)
+  console.log(location.pathname)
+  console.log(isLoading)
+  console.log(isHub, 'hub')
 
   useEffect(() => {
-    if(!isAuthenticated && location.pathname !== '/hub/register' && location.pathname !== '/hub') {
+    if(isLoading) return;
+
+    if(location.pathname.startsWith('/cal') && isHub && isAuthenticated && !isLoading) {
+      console.log('oi')
+      setIsHub(false)
+    }
+
+    if(!isAuthenticated && location.pathname !== '/hub/register' && location.pathname !== '/hub' && !isLoading) {
       navigate("/hub/login");
     }
 
-    if(isAuthenticated && (location.pathname === '/hub/login' || location.pathname === '/hub/register')) {
+    if(isAuthenticated && (location.pathname === '/hub/login' || location.pathname === '/hub/register') && !isLoading) {
       navigate("/hub");
     }
-  }, [isAuthenticated, location.pathname]);
+  }, [isAuthenticated, location.pathname, isLoading]);
 
   if(isLoading) {
     return <Center h={'100vh'}>
@@ -41,7 +53,9 @@ export const Layout = () => {
         <Outlet />
         </> :
         <SidebarWithHeader>
+        <Flex h={isAuthenticated ? '92vh' : '100vh'}>
         <Outlet />
+        </Flex>
       </SidebarWithHeader>
       )}
     </>
