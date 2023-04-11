@@ -1,7 +1,9 @@
 import {
   Button,
+  Center,
   Flex,
   Heading,
+  Spinner,
   Table,
   TableContainer,
   Tbody,
@@ -9,10 +11,33 @@ import {
   Th,
   Thead,
   Tr,
+  Icon,
 } from '@chakra-ui/react';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { useEffect, useState } from 'react';
+import { pagamentoApi } from '../../services/api';
+import { FcHighPriority, FcOk } from 'react-icons/fc';
 
 export const ListOfTransactions = () => {
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function getTransactions() {
+      const { data } = await pagamentoApi.get('/payment/list');
+      setTransactions(data);
+      setIsLoading(false);
+    }
+    getTransactions();
+  }, []);
+
+  console.log(transactions);
+  if (loading) {
+    return (
+      <Center w={'100vh'}>
+        <Spinner />
+      </Center>
+    );
+  }
   return (
     <Flex direction="column" w="100%" p="20px" h="-webkit-fit-content">
       <Flex w="100%" alignItems="center" justifyContent="space-between">
@@ -24,23 +49,37 @@ export const ListOfTransactions = () => {
             <Tr>
               <Th>Nome</Th>
               <Th>Data</Th>
-              <Th>Qt. Almoços</Th>
-              <Th>Qt. jantas</Th>
+              <Th textAlign="center">Qt. Almoços</Th>
+              <Th textAlign="center">Qt. jantas</Th>
               <Th>R$ Total</Th>
-              <Th>Método de pagamento</Th>
-              <Th>Status</Th>
+              <Th textAlign="center">Método de pagamento</Th>
+              <Th textAlign="center">Status</Th>
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>Juao Freire</Td>
-              <Td>10/04/23</Td>
-              <Td>3</Td>
-              <Td>3</Td>
-              <Td>R$19.5</Td>
-              <Td>PIX</Td>
-              <Td>Falha</Td>
-            </Tr>
+            {transactions?.map((transaction, index) => {
+              return (
+                <Tr key={index}>
+                  <Td>{transaction.name}</Td>
+                  <Td>{transaction.date}</Td>
+                  <Td textAlign="center">{transaction.lunch_amount}</Td>
+                  <Td textAlign="center">{transaction.dinner_amount}</Td>
+                  <Td>R${transaction.total_value}</Td>
+                  <Td textAlign="center">
+                    {transaction.payment_method === 'credit'
+                      ? 'crédito'
+                      : 'pix'}
+                  </Td>
+                  <Td textAlign="center" verticalAlign="middle">
+                    {transaction.payment_status === 'Pagamento aprovado' ? (
+                      <Icon as={FcOk} />
+                    ) : (
+                      <Icon as={FcHighPriority} />
+                    )}
+                  </Td>
+                </Tr>
+              );
+            })}
           </Tbody>
         </Table>
       </TableContainer>
