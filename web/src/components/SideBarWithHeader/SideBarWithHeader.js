@@ -58,6 +58,7 @@ function SideBar() {
   const btnRef = React.useRef();
   const { lunch, dinner, setDinner, setLunch } = useContext(AuthContext);
   const [totalTickets, setTotalTickets] = useState(lunch * 3.5 + dinner * 3);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTotalTickets(lunch * 3.5 + dinner * 3);
@@ -141,6 +142,7 @@ function SideBar() {
           </Flex>
           <DrawerFooter>
             <Button
+              onClick={() => navigate('/hub/pay')}
               w="100%"
               colorScheme="blue"
               isDisabled={
