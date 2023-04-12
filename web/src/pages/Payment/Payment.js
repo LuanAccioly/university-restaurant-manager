@@ -22,6 +22,8 @@ import { BiMoneyWithdraw } from 'react-icons/bi';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useContext, useEffect, useState } from 'react';
 import { pagamentoApi } from '../../services/api';
+import Cards from 'react-credit-cards';
+import 'react-credit-cards/es/styles-compiled.css';
 
 export const Payment = () => {
   const { lunch, dinner } = useContext(AuthContext);
@@ -32,9 +34,10 @@ export const Payment = () => {
 
   const [form, setForm] = useState({
     name: '',
-    ccNumber: '',
-    cvv: '',
+    number: '',
+    cvc: '',
     ccDate: '',
+    focus: '',
   });
 
   function handleChange(event) {
@@ -44,6 +47,10 @@ export const Payment = () => {
       [name]: value,
     });
   }
+
+  const handleInputFocus = e => {
+    setForm({ ...form, focus: e.target.name });
+  };
 
   useEffect(() => {
     setTotalTickets(lunch * 3.5 + dinner * 3);
@@ -66,9 +73,9 @@ export const Payment = () => {
       dinner_amount: dinner,
       total_value: totalTickets,
       payment_method: 'credit',
-      credit_card_number: form.ccNumber,
+      credit_card_number: form.number,
       credit_name: form.name,
-      credit_cvv: form.cvv,
+      credit_cvc: form.cvc,
       credit_expiration_date: ccDate,
     };
   }
@@ -111,6 +118,7 @@ export const Payment = () => {
                       />
                       <Input
                         name="name"
+                        onFocus={handleInputFocus}
                         value={form.name}
                         onChange={handleChange}
                         placeholder="Luís Inácio..."
@@ -133,8 +141,9 @@ export const Payment = () => {
                         children={<BsFillCreditCardFill />}
                       />
                       <Input
-                        name="ccNumber"
-                        value={form.ccNumber}
+                        name="number"
+                        value={form.number}
+                        onFocus={handleInputFocus}
                         onChange={handleChange}
                         textAlign="center"
                         type="tel"
@@ -150,7 +159,7 @@ export const Payment = () => {
                   <HStack w="100%">
                     <Box w="50%">
                       <Heading as="h4" size="md">
-                        CVV
+                        cvc
                       </Heading>
                       <Text mt="15px" color="gray.500">
                         Digite os 3 ou 4 dígitos atrás do cartão
@@ -162,9 +171,10 @@ export const Payment = () => {
                         children={<BsGrid3X3GapFill />}
                       />
                       <Input
-                        name="cvv"
-                        value={form.cvv}
+                        name="cvc"
+                        value={form.cvc}
                         onChange={handleChange}
+                        onFocus={handleInputFocus}
                         textAlign="center"
                         type="tel"
                         inputMode="numeric"
@@ -230,6 +240,8 @@ export const Payment = () => {
           h="70%"
           minH="450px"
           w="40%"
+          minW="400px"
+          maxW="400px"
           bgColor="gray.200"
           borderRadius="25px"
           boxShadow="0px 20px 50px rgba(0, 0, 0, 0.2)"
@@ -238,8 +250,20 @@ export const Payment = () => {
             alignItems="end"
             justifyContent="center"
             h="70%"
+            direction="column"
             paddingBottom="40px"
           >
+            <Box mb="40px" w="100%">
+              <Cards
+                locale={{ valid: 'Validade' }}
+                placeholders={{ name: 'Seu nome aqui' }}
+                cvc={form.cvc}
+                expiry={ccDate}
+                focused={form.focus}
+                name={form.name}
+                number={form.number}
+              />
+            </Box>
             <VStack w="100%">
               <Flex justifyContent="space-between" w="75%">
                 <Text>Qt. almoços: </Text>
