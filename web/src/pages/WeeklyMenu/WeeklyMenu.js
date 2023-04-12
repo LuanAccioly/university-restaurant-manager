@@ -1,10 +1,12 @@
 import {
   Box,
   Button,
+  Center,
   color,
   Flex,
   Heading,
   Input,
+  Spinner,
   Text,
   useColorMode,
   useColorModeValue,
@@ -15,14 +17,24 @@ import SwitchSelector from 'react-switch-selector';
 import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { cozinhaApi } from '../../services/api';
 
 export const WeeklyMenu = () => {
   const colorMode = useColorMode();
   const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTurn, setSelectedTurn] = useState('Almoço');
   const [dayOfWeek, setDayOfWeek] = useState('');
 
   console.log(selectedDate);
-  console.log(dayOfWeek);
+
+  useEffect(() => {
+    const dateStr = new Date().toLocaleDateString();
+    const parts = dateStr.split("/");
+    const yyyyMMdd = parts[2] + "-" + parts[1].padStart(2, "0") + "-" + parts[0].padStart(2, "0");
+
+    setSelectedDate(yyyyMMdd);
+  }, []);
+
 
   useEffect(() => {
     function getDayOfWeek() {
@@ -50,24 +62,45 @@ export const WeeklyMenu = () => {
   const options = [
     {
       label: <Text>Almoço</Text>,
-      value: {
-        foo: true,
-      },
+      value: "Almoço",
       selectedBackgroundColor: '#90CDF4',
     },
     {
       label: <Text>Jantar</Text>,
-      value: 'bar',
+      value: 'Janta',
       selectedBackgroundColor: '#90CDF4',
     },
   ];
   const initialSelectedIndex = options.findIndex(
-    ({ value }) => value === 'bar'
+    ({ value }) => value === 'Almoço'
   );
-  console.log(colorMode);
 
   const { isAuthenticated, user } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const [menu, setMenu] = useState()
+  const [loading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+   async function getDishes() {
+      const { data } = await cozinhaApi.get("/cardapio/"+selectedDate+"/"+selectedTurn)
+      if(data) {
+        setMenu(data)
+      }
+    }
+
+    if(selectedDate && selectedTurn) {
+      getDishes();
+      setIsLoading(false)
+    }
+
+  }, [selectedDate, selectedTurn])
+
+  if(loading) {
+    return <Center h={'100vh'}>
+      <Spinner/>
+    </Center>
+  }
 
 
   return (
@@ -93,13 +126,14 @@ export const WeeklyMenu = () => {
             <SwitchSelector
               options={options}
               initialSelectedIndex={initialSelectedIndex}
+              onChange={(newValue) => setSelectedTurn(newValue)}
               backgroundColor="transparent"
               border="5"
               fontColor={'#f5f6fa'}
             />
           </Flex>
         </Flex>
-        <Menu />
+        <Menu data={menu} />
       </VStack>
     </Flex>
   );

@@ -7,8 +7,8 @@ const routes = Router();
 
 
 routes.post("/create", validateToken,  CardapioController.create)
-routes.put("/update/:id", validateToken,  CardapioController.update)
-routes.get("/index", validateToken, CardapioController.index)
-routes.get("/:id", validateToken, CardapioController.view)
+routes.put("/update/:menu_date/:turn", validateToken,  CardapioController.update)
+routes.get("/index", CardapioController.index)
+routes.get("/:menu_date/:turn", CardapioController.view)
 
 export default routes;

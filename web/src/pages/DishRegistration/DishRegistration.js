@@ -186,8 +186,6 @@ export const DishRegistration = ({ image }) => {
     }
   }
 
-  console.log(nutriTable);
-
 
   function changeNutriTable(value, key, keyOpt){
     let nutriTableCopy = {...nutriTable}
@@ -226,6 +224,9 @@ export const DishRegistration = ({ image }) => {
               <option value="bebida">Bebida</option>
               <option value="sobremesa">Sobremesa</option>
               <option value="vegetariana">Vegetariana</option>
+              <option value="guarnicao">Guarnição</option>
+              <option value="sal_crua">Salada Crua</option>
+              <option value="sal_coz">Salada Cozida</option>
             </Select>
           </HStack>
           <Textarea

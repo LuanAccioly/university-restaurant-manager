@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import {setCookie, parseCookies, destroyCookie} from 'nookies'
 import { recoverUser, signInRequest } from "../services/auth";
-import { userApi } from "../services/api";
+import { cozinhaApi, userApi } from "../services/api";
 import useLocalStorage from "use-local-storage";
 import cookie from 'js-cookie';
 
@@ -24,6 +24,8 @@ export function AuthProvider ({children}) {
                 if(!response) {
                     signOut(); 
                 }
+                userApi.defaults.headers['Authorization'] = `Bearer ${token}`
+                cozinhaApi.defaults.headers['Authorization'] = `Bearer ${token}`
                 setUser(response)
                 setIsLoading(false)
             });   
@@ -43,6 +45,7 @@ export function AuthProvider ({children}) {
         })
 
         userApi.defaults.headers['Authorization'] = `Bearer ${token}`
+        cozinhaApi.defaults.headers['Authorization'] = `Bearer ${token}`
 
         setUser(user)
     }

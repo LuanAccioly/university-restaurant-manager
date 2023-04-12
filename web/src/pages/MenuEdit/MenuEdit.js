@@ -13,9 +13,11 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { cozinhaApi } from '../../services/api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export const MenuRegistration = () => {
+export const MenuEdit = () => {
+  const { menuDate, menuTurn } = useParams();
+
   const navigate = useNavigate();
 
   const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString('en-US'));
@@ -34,13 +36,30 @@ export const MenuRegistration = () => {
   const [dinnerCheckbox, setDinnerCheckbox] = useState(false);
 
   useEffect(() => {
-    const dateStr = new Date().toLocaleDateString();
-    console.log(dateStr)
-    const parts = dateStr.split("/");
-    const yyyyMMdd = parts[2] + "-" + parts[1].padStart(2, "0") + "-" + parts[0].padStart(2, "0");
+    async function getMenu() {
+      const { data } = await cozinhaApi.get("/cardapio/"+menuDate+"/"+menuTurn);
+      console.log(data)
+      setPp1(data.pp_1._id)
+      setPp2(data.pp_2._id)
+      setFast(data.fast._id)
+      setGrelha(data.grelha._id)
+      setVeg(data.veg._id)
+      setGuarnicao(data.guarnicao._id)
+      setSaladCr(data.salad_cr._id)
+      setSaladCuz(data.salad_cuz._id)
+      setSobremesa(data.sobremesa._id)
+      setSuco(data.suco._id)
+      setSelectedDate(data.menu_date)
+      if(data.turn === "Janta") {
+        setDinnerCheckbox(true)
+      } else {
+        setLunchCheckbox(true)
+      }
+    }
 
-    setSelectedDate(yyyyMMdd);
-  }, []);
+    getMenu();
+
+  }, [menuDate, menuTurn]);
 
   const [dishes, setDishes] = useState([])
 
@@ -90,7 +109,7 @@ export const MenuRegistration = () => {
 
   const toast = useToast();
 
-  console.log(pp1)
+  console.log(pp1 ? true : false)
 
 
   const handleSubmit = async () => {
@@ -106,7 +125,7 @@ export const MenuRegistration = () => {
     }
   
     try {
-      const { data } = await cozinhaApi.post("/cardapio/create", {
+      const { data } = await cozinhaApi.put("/cardapio/update/"+menuDate+"/"+menuTurn, {
         pp_1: pp1,
         pp_2: pp2,
         fast: fast,
@@ -122,7 +141,7 @@ export const MenuRegistration = () => {
       })
 
       toast({
-        title: `Cardapio cadastrado com sucesso!`,
+        title: `Cardapio atualizado com sucesso!`,
         position: 'top-right',
         status: 'success',
         isClosable: true,
@@ -165,7 +184,7 @@ export const MenuRegistration = () => {
         </Flex>
       </Flex>
       <Flex flex="1" mt="20px" direction="column">
-        <Heading>Cadastro de cardápio</Heading>
+        <Heading>Edição de cardápio</Heading>
         <VStack w="98%" gap="40px" mt="50px">
           <HStack gap="20px" w="100%">
             <Stack w="100%">
@@ -303,7 +322,7 @@ export const MenuRegistration = () => {
                 Jantar
               </Checkbox>
             </Flex>
-            <Button colorScheme="blue" onClick={()=> handleSubmit()}>Cadastrar</Button>
+            <Button colorScheme="blue" onClick={()=> handleSubmit()}>Atualizar</Button>
           </Flex>
         </VStack>
       </Flex>

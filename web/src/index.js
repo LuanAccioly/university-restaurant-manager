@@ -14,8 +14,10 @@ import { Menu } from './pages/Menu/Menu';
 import { DishRegistration } from './pages/DishRegistration/DishRegistration';
 import { DishEdit } from './pages/DishEdit/DishEdit';
 import { MenuRegistration } from './pages/MenuRegistration/MenuRegistration';
+import { ListOfMenus } from './pages/ListOfMenus/ListOfMenus';
 import { ListOfTransactions } from './pages/ListOfTransactions/ListOfTransactions';
 import { Payment } from './pages/Payment/Payment';
+import { MenuEdit } from './pages/MenuEdit/MenuEdit';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
@@ -60,7 +62,15 @@ const routes = createBrowserRouter(
         },
         {
           path: 'menu',
+          element: <ListOfMenus />,
+        },
+        {
+          path: 'menu/create',
           element: <MenuRegistration />,
+        },
+        {
+          path: 'menu/:menuDate/:menuTurn',
+          element: <MenuEdit />,
         },
         {
           path: 'transactions',

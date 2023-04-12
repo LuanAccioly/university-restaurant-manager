@@ -51,12 +51,14 @@ class PratoController {
 
 
         if(!req.file) {
+            console.log('emtrpi', nutri_table)
             try {
-                await Prato.updateOne({
-                    id,
+                await Prato.updateOne({ 
+                    _id: id,
+                }, {
                     name,
                     description,
-                    nutri_table,
+                    nutri_table: JSON.parse(nutri_table),
                     picture: prato.picture,
                     type
                 }).then(result => {
@@ -67,6 +69,7 @@ class PratoController {
                     }
                 }) 
             } catch (error) {
+                console.log(error)
                 return res.status(400).json({
                     error: error,
                     message: "Falha no registro do prato"
@@ -80,8 +83,9 @@ class PratoController {
         const imagePath = `./images/${prato.picture}`;
 
         try {
-            await Prato.updateOne({
-                id,
+            await Prato.updateOne({ 
+                _id: id,
+            },{
                 name,
                 description,
                 nutri_table,
@@ -111,9 +115,8 @@ class PratoController {
 
 
         try {
-            const pratos = await Prato.find().lean().exec()
+            const pratos = await Prato.find().then(pratos => pratos.map(prato => prato.toJSON()))
 
-            console.log(pratos)
 
             return res.json(pratos);
         } catch (error) {
@@ -128,8 +131,6 @@ class PratoController {
         const {
             id
         } = req.params;
-
-        console.log(id)
 
         try {
             const prato = await Prato.findOne({

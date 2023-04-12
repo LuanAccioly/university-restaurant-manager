@@ -14,7 +14,7 @@ import 'react-multi-carousel/lib/styles.css';
 import './menu.css';
 import { useColorMode } from '@chakra-ui/react';
 
-export const Menu = () => {
+export const Menu = ({data}) => {
   const { colorMode } = useColorMode();
   const imageStyle = {
     filter: colorMode === 'dark' ? 'brightness(0.7)' : 'brightness(1)',
@@ -38,12 +38,17 @@ export const Menu = () => {
       items: 1,
     },
   };
+
+  if(!data) return <h1>Sem cardápio para hoje</h1>
+
+  console.log(data.pp_1.picture)
+
   return (
     <Flex w="100%" justifyContent="center" mt="30px">
       <VStack gap="20px" w="100%">
         <Flex w="98.5%" gap="30px">
           <Box
-            bgImage="url('https://www.sabornamesa.com.br/media/k2/items/cache/e8658cb4a1b6dba2ad4d07e8c6d174b9_XL.jpg')"
+            bgImage={`url('http://localhost:3002/${data.pp_1.picture}')`}
             style={imageStyle}
             bgPosition="center"
             bgSize="cover"
@@ -61,7 +66,7 @@ export const Menu = () => {
               <Flex h="100%" alignItems="flex-end" padding="40px">
                 <Box color="white">
                   <Heading color="white" as="h2" size="xl">
-                    Frango Grelhado
+                    {data.pp_1.name}
                   </Heading>
                   <Heading as="h4" size="md">
                     Prato Principal 1
@@ -73,7 +78,7 @@ export const Menu = () => {
           </Box>
           <Box bg="green.100" w="300px" borderRadius="15px" p="30px">
             <Image
-              src="https://cdn-icons-png.flaticon.com/512/2738/2738730.png"
+              src={`http://localhost:3002/${data.pp_1.picture}`}
               boxSize="120px"
               marginBottom="30px"
             />
@@ -83,7 +88,7 @@ export const Menu = () => {
                   Suco do dia:
                 </Heading>
                 <Heading as="h4" size="md">
-                  Limão e Uva
+                  {data.suco.name}
                 </Heading>
               </Box>
             </Flex>
@@ -102,47 +107,51 @@ export const Menu = () => {
           >
             <Dish
               title="Prato Principal 2"
-              dish="Feijoada"
-              description="Consiste num guisado de feijões-pretos com vários tipos de carne de porco e de boi"
-              image="https://assets.unileversolutions.com/recipes-v2/54349.jpg"
+              dish={data.pp_2.name}
+              description={data.pp_2.description}
+              image={`http://localhost:3002/${data.pp_2.picture}`}
             />
             <Dish
               title="Fast Grill"
-              dish="Festival de Massas"
-              description="Macarrão daquele jeitinho com molho branco, vermelho e algumas opções de carne para acompanhemento."
-              image="https://soubh.uai.com.br/uploads/post/image/5883/main_211902_shutterstock_421827745.jpg"
+              dish={data.fast.name}
+              description={data.fast.description}
+              image={`http://localhost:3002/${data.fast.picture}`}
             />
             <Dish
               title="Na Grelha"
-              dish="Isca de Carne com Pimentões"
-              image="https://www.rbsdirect.com.br/imagesrc/25399331.jpg?w=700"
-              description="Prato feito com tiras finas de carne (geralmente bovina), salteadas em uma frigideira com pimentões picados e temperos, como alho e cebola."
+              dish={data.grelha.name}
+              description={data.grelha.description}
+              image={`http://localhost:3002/${data.grelha.picture}`}
             />
             <Dish
               title="Vegetariano"
-              dish="Estrogonofe no grão de bico"
-              image="https://receitanatureba.com/wp-content/uploads/2018/10/capa-18.jpg"
-              description="Versão vegetariana do prato tradicional russo, feito com grão de bico em vez de carne, e um molho cremoso à base de creme de leite"
+              dish={data.veg.name}
+              description={data.veg.description}
+              image={`http://localhost:3002/${data.veg.picture}`}
             />
             <Dish
               title="Guarnição"
-              dish="Abobrinha Refogada / Arroz / Feijão Carioca"
-              image="https://minhasaude.proteste.org.br/wp-content/uploads/2021/08/arroz-e-feij%C3%A3o.jpg"
+              dish={data.guarnicao.name}
+              description={data.guarnicao.description}
+              image={`http://localhost:3002/${data.guarnicao.picture}`}
             />
             <Dish
               title="Salada Crua"
-              dish="Mix de Folhas com Frutas"
-              image="https://i0.wp.com/panelaterapia.com/wp-content/uploads/2013/06/salada11.jpg?fit=640%2C437&ssl=1"
+              dish={data.salad_cr.name}
+              description={data.salad_cr.description}
+              image={`http://localhost:3002/${data.salad_cr.picture}`}
             />
             <Dish
               title="Salada Cozida"
-              dish="Beterraba com Gergelim"
-              image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSChq6QFxUwIOVgTvHprUyNPGFoj9916tDPkg&usqp=CAU"
+              dish={data.salad_cuz.name}
+              description={data.salad_cuz.description}
+              image={`http://localhost:3002/${data.salad_cuz.picture}`}
             />
             <Dish
-              title="Salada Cozida"
-              dish="Beterraba com Gergelim"
-              image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSChq6QFxUwIOVgTvHprUyNPGFoj9916tDPkg&usqp=CAU"
+              title="Sobremesa"
+              dish={data.sobremesa.name}
+              description={data.sobremesa.description}
+              image={`http://localhost:3002/${data.sobremesa.picture}`}
             />
           </Carousel>
         </Flex>

@@ -1,16 +1,18 @@
 import mongoose, { Schema } from "mongoose";
 
 export interface Cardapio {
-    pp_1: string;
-    pp_2: string;
-    fast: string;
-    grelha: string;
-    veg: string;
-    guarnicao: string;
-    salad_cr: string;
-    salad_cuz: string;
-    sobremesa: string;
-    suco: string;
+    pp_1: any;
+    pp_2: any;
+    fast: any;
+    grelha: any;
+    veg: any;
+    guarnicao: any;
+    salad_cr: any;
+    salad_cuz: any;
+    sobremesa: any;
+    suco: any;
+    turn: string;
+    menu_date: string;
 }
 
 export interface CardapioDocument extends Cardapio, mongoose.Document {
@@ -21,42 +23,50 @@ export interface CardapioDocument extends Cardapio, mongoose.Document {
 
 const cardapioSchema = new mongoose.Schema({
     pp_1:{
-        type: String,
+        type: Schema.Types.Mixed,
         required: true,
     },
     pp_2:{
-        type: String,
+        type: Schema.Types.Mixed,
         required: true,
     },
     fast:{
-        type: String,
+        type: Schema.Types.Mixed,
         required: true,
     },
     grelha:{
-        type: String,
+        type: Schema.Types.Mixed,
         required: true,
     },
     veg:{
-        type: String,
+        type: Schema.Types.Mixed,
         required: true,
     },
     guarnicao:{
-        type: String,
+        type: Schema.Types.Mixed,
         required: true,
     },
     salad_cr:{
-        type: String,
+        type: Schema.Types.Mixed,
         required: true,
     },
     salad_cuz:{
-        type: String,
+        type: Schema.Types.Mixed,
         required: true,
     },
     sobremesa:{
-        type: String,
+        type: Schema.Types.Mixed,
         required: true,
     },
     suco:{
+        type: Schema.Types.Mixed,
+        required: true,
+    },
+    turn:{
+        type: String,
+        required: true,
+    },
+    menu_date:{
         type: String,
         required: true,
     },

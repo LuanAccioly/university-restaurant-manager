@@ -172,7 +172,7 @@ export const DishEdit = ({ image }) => {
     const prato = new FormData();
     prato.append('name', dishName);
     prato.append('description', dishDescription);
-    prato.append('nutri_table', {foo: 'boo'});
+    prato.append('nutri_table', JSON.stringify(nutriTable));
     if(imageUp) {
       prato.append('image', imageUp);
     }
