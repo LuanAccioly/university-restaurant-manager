@@ -12,10 +12,11 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { AiOutlinePlus } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { cozinhaApi } from '../../services/api';
 import { useEffect, useState } from 'react';
+import { AiOutlinePlus, AiFillEdit } from 'react-icons/ai';
+import { FaTrashAlt } from 'react-icons/fa';
 
 export const ListOfMenus = () => {
   const navigate = useNavigate();
@@ -61,7 +62,8 @@ export const ListOfMenus = () => {
             <Tr>
               <Th>Data</Th>
               <Th>Turno</Th>
-              <Th textAlign="end"> </Th>
+              <Th textAlign="end">Edição</Th>
+              <Th textAlign="end">Excluir</Th>
             </Tr>
           </Thead>
           {menus.map((menu, index) => (
@@ -74,11 +76,17 @@ export const ListOfMenus = () => {
                 <Td>{menu.turn}</Td>
                 <Td>
                   <Button
+                    size="sm"
                     onClick={() =>
                       navigate('/cal/menu/' + menu.menu_date + '/' + menu.turn)
                     }
                   >
-                    Editar
+                    <AiFillEdit />
+                  </Button>
+                </Td>
+                <Td textAlign="end">
+                  <Button size="sm" colorScheme="red">
+                    <FaTrashAlt />
                   </Button>
                 </Td>
               </Tr>
