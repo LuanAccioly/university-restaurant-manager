@@ -18,14 +18,13 @@ import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { cozinhaApi } from '../../services/api';
+import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 
 export const WeeklyMenu = () => {
   const colorMode = useColorMode();
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTurn, setSelectedTurn] = useState('Almoço');
   const [dayOfWeek, setDayOfWeek] = useState('');
-
-  console.log(selectedDate);
 
   useEffect(() => {
     const dateStr = new Date().toLocaleDateString();
@@ -86,18 +85,20 @@ export const WeeklyMenu = () => {
       const { data } = await cozinhaApi.get("/cardapio/"+selectedDate+"/"+selectedTurn)
       if(data) {
         setMenu(data)
+      } else {
+        setMenu(null)
       }
+      setIsLoading(false)
     }
 
     if(selectedDate && selectedTurn) {
       getDishes();
-      setIsLoading(false)
     }
 
   }, [selectedDate, selectedTurn])
 
   if(loading) {
-    return <Center h={'100vh'}>
+    return <Center h={'100vh'} w={'100%'}>
       <Spinner/>
     </Center>
   }
@@ -131,9 +132,10 @@ export const WeeklyMenu = () => {
               border="5"
               fontColor={'#f5f6fa'}
             />
+            {!isAuthenticated && <ColorModeSwitcher />}
           </Flex>
         </Flex>
-        <Menu data={menu} />
+        <Menu data={menu} loading={loading} />
       </VStack>
     </Flex>
   );

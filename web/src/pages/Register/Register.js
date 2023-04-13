@@ -46,8 +46,6 @@ export const Register = () => {
   const handleSubmit = async () => {
     //setIsSaving(true)
 
-    console.log(firstName, secondName, email, password, confirmPassword);
-
     if (!firstName || !secondName || !email || !password || !confirmPassword) {
       toast({
         title: `Preencha todos os campos`,

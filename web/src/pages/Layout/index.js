@@ -11,17 +11,10 @@ export const Layout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(isAuthenticated)
-  console.log(user)
-  console.log(location.pathname)
-  console.log(isLoading)
-  console.log(isHub, 'hub')
-
   useEffect(() => {
     if(isLoading) return;
 
     if(location.pathname.startsWith('/cal') && isHub && isAuthenticated && !isLoading) {
-      console.log('oi')
       setIsHub(false)
     }
 

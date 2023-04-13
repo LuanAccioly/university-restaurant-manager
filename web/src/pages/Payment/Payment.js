@@ -97,7 +97,6 @@ export const Payment = () => {
     pagamentoApi
       .post('/payment/pay', postData)
       .then(async (response) => {
-        console.log(response);
 
         if (response.data.payment_status === 'Pagamento aprovado') {
           toast({

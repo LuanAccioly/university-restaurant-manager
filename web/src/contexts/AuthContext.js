@@ -94,11 +94,22 @@ export function AuthProvider ({children}) {
     }
 
     async function signOut () {
-        console.log('deslogando')
         await destroyCookie(undefined, 'ru.token')
-        setDinner(0)
-        setLunch(0)
-        setUser(null)
+        const { 'ru.token': token } = parseCookies()
+        if(!token) {
+            setDinner(0)
+            setLunch(0)
+            setUser(null)
+            toast({
+                title: `Usuário deslogado`,
+                position: 'top-right',
+                status: 'success',
+                isClosable: true,
+              });
+            setTimeout(() => {
+                window.location.replace('http://localhost:3000/hub')
+            }, 700);
+        }
     }
 
     return (

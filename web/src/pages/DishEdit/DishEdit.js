@@ -41,8 +41,6 @@ import { useParams } from 'react-router-dom';
 export const DishEdit = ({ image }) => {
   const { dishId } = useParams();
 
-  console.log(dishId, 'aaaa')
-
   const [imageUp, setImageUp] = useState(null);
   const [preview, setPreview] = useState(null);
   const toast = useToast();
@@ -93,7 +91,6 @@ export const DishEdit = ({ image }) => {
   useEffect(() => {
     async function getDishes() {
        const { data } = await cozinhaApi.get("/pratos/"+dishId)
-       console.log(data)
        setDishName(data.name)
        setDishDescription(data.description)
        setDishType(data.type)

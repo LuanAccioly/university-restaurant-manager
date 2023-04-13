@@ -43,8 +43,7 @@ import {
   FiShoppingCart,
   FiChevronDown,
 } from 'react-icons/fi';
-import { BiDish, BiFoodMenu } from 'react-icons/bi';
-import { GrTransaction } from 'react-icons/gr';
+import { BiDish, BiFoodMenu , BiTransfer} from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
@@ -54,7 +53,7 @@ const LinkItems = [
   { name: 'Home', icon: FiHome, ref: '/' },
   { name: 'Pratos', icon: BiDish, ref: '/dish' },
   { name: 'Cardápios', icon: BiFoodMenu, ref: '/menu' },
-  { name: 'Transações', icon: GrTransaction, ref: '/transactions' },
+  { name: 'Transações', icon: BiTransfer, ref: '/transactions' },
 ];
 
 function SideBar() {
@@ -203,7 +202,6 @@ export function SidebarWithHeader({ children }) {
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }}>
         {children}
-        {console.log(isOpen)}
       </Box>
     </Box>
   );
@@ -286,13 +284,6 @@ export const MobileNav = ({ onOpen, ...rest }) => {
 
   const navigate = useNavigate();
 
-  async function handleSignOut() {
-    await signOut();
-    navigate('/hub');
-  }
-
-  console.log(user)
-
   return (
     <Flex
       ml={{ base: 0, md: !isHub ? 60 : 0 }}
@@ -322,7 +313,7 @@ export const MobileNav = ({ onOpen, ...rest }) => {
         Logo
       </Text> */}
       
-      <Heading size="md" cursor={'pointer'} onClick={() => navigate('/hub')} fontFamily={'sans-serif'}>
+      <Heading size="md" cursor={'pointer'} onClick={() => window.location.replace('http://localhost:3000/hub')} fontFamily={'sans-serif'}>
         UFRPE - RU
       </Heading>
 
@@ -401,7 +392,9 @@ export const MobileNav = ({ onOpen, ...rest }) => {
               </MenuItemOption >
               </MenuOptionGroup>
               <MenuDivider />
-              <MenuItem onClick={() => handleSignOut()}>Sair</MenuItem>
+              <MenuItem onClick={() => {
+                signOut()
+                }}>Sair</MenuItem>
             </MenuList>
           </Menu>
         </Flex>

@@ -12,9 +12,9 @@ import Dish from '../../components/Dish/Dish';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './menu.css';
-import { useColorMode } from '@chakra-ui/react';
+import { Spinner, useColorMode } from '@chakra-ui/react';
 
-export const Menu = ({data}) => {
+export const Menu = ({data, loading}) => {
   const { colorMode } = useColorMode();
   const imageStyle = {
     filter: colorMode === 'dark' ? 'brightness(0.7)' : 'brightness(1)',
@@ -39,20 +39,20 @@ export const Menu = ({data}) => {
     },
   };
 
-  if(!data) return <Center h={"75vh"} overflow={'hidden'}>
+  if(!data) {
+    return (
+      <Center h={"75vh"} overflow={'hidden'}>
     <Image
-     src="https://assets.materialup.com/uploads/57a21feb-709a-43d0-8ba1-d066ccb48390/preview.jpg"
-     borderRadius="40px"
-          padding="20px"
+     src="https://i.pinimg.com/originals/ff/c3/d3/ffc3d3f7e25c28ea2d3fe42231736f00.png"
           boxSize="80%"
-          size="contain"
-          objectFit="cover"
+          size="sm"
+          objectFit="contain"
           objectPosition="center"
      />
     <Heading  fontSize='6xl' fontFamily={'sans-serif'}>Nenhum cardápio para hoje</Heading >
     </Center>
-
-  console.log(data.pp_1.picture)
+    )
+  }
 
   return (
     <Flex w="100%" justifyContent="center" mt="30px">

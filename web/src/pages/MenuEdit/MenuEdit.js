@@ -38,7 +38,6 @@ export const MenuEdit = () => {
   useEffect(() => {
     async function getMenu() {
       const { data } = await cozinhaApi.get("/cardapio/"+menuDate+"/"+menuTurn);
-      console.log(data)
       setPp1(data.pp_1._id)
       setPp2(data.pp_2._id)
       setFast(data.fast._id)
@@ -91,7 +90,6 @@ export const MenuEdit = () => {
     setDayOfWeek(getDayOfWeek());
   }, [selectedDate]);
 
-  console.log(selectedDate, new Date().toLocaleDateString('en-US'))
 
   const handleLunchChange = event => {
     setLunchCheckbox(event.target.checked);
@@ -108,9 +106,6 @@ export const MenuEdit = () => {
   }
 
   const toast = useToast();
-
-  console.log(pp1 ? true : false)
-
 
   const handleSubmit = async () => {
     if(!selectedDate || !pp1 || !pp2 || !fast || !grelha || !veg || !guarnicao || !saladCr || !saladCuz || !sobremesa || !sobremesa || (!dinnerCheckbox && !lunchCheckbox)) {

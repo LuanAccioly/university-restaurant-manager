@@ -35,7 +35,6 @@ export const MenuRegistration = () => {
 
   useEffect(() => {
     const dateStr = new Date().toLocaleDateString();
-    console.log(dateStr)
     const parts = dateStr.split("/");
     const yyyyMMdd = parts[2] + "-" + parts[1].padStart(2, "0") + "-" + parts[0].padStart(2, "0");
 
@@ -72,7 +71,6 @@ export const MenuRegistration = () => {
     setDayOfWeek(getDayOfWeek());
   }, [selectedDate]);
 
-  console.log(selectedDate, new Date().toLocaleDateString('en-US'))
 
   const handleLunchChange = event => {
     setLunchCheckbox(event.target.checked);
@@ -89,8 +87,6 @@ export const MenuRegistration = () => {
   }
 
   const toast = useToast();
-
-  console.log(pp1)
 
 
   const handleSubmit = async () => {

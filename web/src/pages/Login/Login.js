@@ -14,9 +14,6 @@ export const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-
-    console.log(password)
-
     async function handleSignIn(){
         try {
             await signIn({email: email, password: password})
