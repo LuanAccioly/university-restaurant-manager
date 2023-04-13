@@ -12,7 +12,7 @@ const cozinhaApi = axios.create({
 });
 
 const pagamentoApi = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: 'http://localhost:3003',
 });
 
 if (token) {

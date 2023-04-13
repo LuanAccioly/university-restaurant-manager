@@ -10,7 +10,6 @@ load_dotenv()  # take environment variables from .env.
 
 import logging
 import random
-import time
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
@@ -67,7 +66,18 @@ def validate_credit_card(card_number: str) -> bool:
 
     # 8. If checkSum is divisible by 10, it is valid.
     return checkSum % 10 == 0
+    
+def _is_valid_date(exp_date):
+    today = datetime.today()
 
+    if exp_date.year > today.year:
+        return True
+    
+    if exp_date.year < today.year:
+        return False
+    
+    return exp_date.month >= today.month
+    
 app = Flask(__name__)
 CORS(app)
 
@@ -76,13 +86,8 @@ app.config['MONGO_URI'] = f'mongodb+srv://{os.environ["DB_USER"]}:{os.environ["D
 
 mongo = PyMongo(app)
 
-gunicorn_logger = logging.getLogger('gunicorn.error')
-app.logger.handlers = gunicorn_logger.handlers
-app.logger.setLevel(gunicorn_logger.level)
-
 _CURRENT_ID = _max_id() + 1
 print(f'ID atual é: {_CURRENT_ID}')
-
 
 class PaymentMethod(str, Enum):
     PIX = "pix"
@@ -140,11 +145,10 @@ def pay():
         # cc_cvv = data['credit_cvv']
 
         cc_exp_date = data['credit_expiration_date']  # MM/YY
-        exp_date = datetime.strptime(cc_exp_date, "%m/%y")
-        expired = exp_date < datetime.now()
+        exp_date = datetime.strptime(cc_exp_date, "%m/%y").date()
 
         # Adicionar lógica de validação...
-        valid = not expired and validate_credit_card(cc_number)
+        valid =  _is_valid_date(exp_date) and validate_credit_card(cc_number)
     else:
         # Do contrário, é PIX
         # Valida CPF
