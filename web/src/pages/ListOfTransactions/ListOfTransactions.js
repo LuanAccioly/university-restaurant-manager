@@ -48,7 +48,7 @@ export const ListOfTransactions = () => {
           <Thead>
             <Tr>
               <Th>Nome</Th>
-              <Th>Data</Th>
+              <Th>Data | Hora</Th>
               <Th textAlign="center">Qt. Almoços</Th>
               <Th textAlign="center">Qt. jantas</Th>
               <Th>R$ Total</Th>
