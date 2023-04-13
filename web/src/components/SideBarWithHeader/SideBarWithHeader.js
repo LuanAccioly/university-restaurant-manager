@@ -279,7 +279,7 @@ const NavItem = ({ icon, children, refLink, ...rest }) => {
 
 export const MobileNav = ({ onOpen, ...rest }) => {
   const outlineColor = useColorModeValue('gray.200', 'gray.700');
-  const { signOut, user, isHub, setIsHub, logUser } =
+  const { signOut, user, isHub, setIsHub } =
     useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -393,8 +393,6 @@ export const MobileNav = ({ onOpen, ...rest }) => {
               </MenuOptionGroup>
               <MenuDivider />
               <MenuItem onClick={() => {
-                                logUser()
-
                 signOut()
                 }}>Sair</MenuItem>
             </MenuList>

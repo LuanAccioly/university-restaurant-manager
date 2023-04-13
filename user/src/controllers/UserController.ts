@@ -119,7 +119,6 @@ class UserController {
         try {
             const user = await User.findOne({email}).select("+password");
             const match = await user?.comparePassword(password);
-            console.log(match)
             if(match) {
                 const token = jwt.sign({
                     user: {name: user?.name, email: user?.email, manager: user?.manager}

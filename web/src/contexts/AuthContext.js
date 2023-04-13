@@ -93,10 +93,6 @@ export function AuthProvider ({children}) {
         setUser(user)
     }
 
-    function logUser () {
-        console.log(user)
-    }
-
     async function signOut () {
         await destroyCookie(undefined, 'ru.token', { path: '/hub' })
         await destroyCookie(undefined, 'ru.token', { path: '/cal' })
@@ -119,7 +115,7 @@ export function AuthProvider ({children}) {
     }
 
     return (
-        <AuthContext.Provider value={{user, isAuthenticated, signIn, signOut, isHub, setIsHub, isLoading, setLunch, setDinner, dinner, lunch, logUser}}>
+        <AuthContext.Provider value={{user, isAuthenticated, signIn, signOut, isHub, setIsHub, isLoading, setLunch, setDinner, dinner, lunch}}>
             {children}
         </AuthContext.Provider>
     )

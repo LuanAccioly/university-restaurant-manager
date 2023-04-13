@@ -55,7 +55,6 @@ class PratoController {
 
 
         if(!req.file) {
-            console.log('emtrpi', nutri_table)
             try {
                 await Prato.updateOne({ 
                     _id: id,
@@ -73,7 +72,6 @@ class PratoController {
                     }
                 }) 
             } catch (error) {
-                console.log(error)
                 return res.status(400).json({
                     error: error,
                     message: "Falha no registro do prato"
