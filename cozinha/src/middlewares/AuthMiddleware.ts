@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express'
 const validateToken = (req: Request, res: Response, next: NextFunction) => {
     const accessToken = req.headers.authorization;
 
-    if(!accessToken) return res.json({error: "Usuário não autorizado"})
+    if(!accessToken) return res.status(401).json({error: "Usuário não autorizado"})
 
     const [, token] = accessToken.split(" ");
 

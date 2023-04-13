@@ -4,11 +4,14 @@ import { recoverUser, signInRequest } from "../services/auth";
 import { cozinhaApi, userApi } from "../services/api";
 import useLocalStorage from "use-local-storage";
 import cookie from 'js-cookie';
+import { useToast } from "@chakra-ui/react";
 
 
 export const AuthContext = createContext({})
 
 export function AuthProvider ({children}) {
+    const toast = useToast();
+
     const [user, setUser] = useState(null)
     const [isHub, setIsHub] = useState(true)
     const [lunch, setLunch] =  useLocalStorage("lunch", "0");
@@ -19,6 +22,46 @@ export function AuthProvider ({children}) {
 
     useEffect(() => {
         const { 'ru.token': token } = parseCookies()
+
+        userApi.interceptors.response.use(
+            (response) => {
+              return response;
+            },
+            (error) => {
+              if (error?.response?.status === 401) {
+                toast({
+                    title: `Usuário não logado`,
+                    position: 'top-right',
+                    status: 'error',
+                    isClosable: true,
+                  });
+                signOut(); 
+                setUser(null);
+                window.location.replace('http://localhost:3000/hub/login')
+              }
+              return error;
+            }
+          );
+          cozinhaApi.interceptors.response.use(
+            (response) => {
+              return response;
+            },
+            (error) => {
+              if (error?.response?.status === 401) {
+                toast({
+                    title: `Usuário não logado`,
+                    position: 'top-right',
+                    status: 'error',
+                    isClosable: true,
+                  });
+                signOut(); 
+                setUser(null);
+                window.location.replace('http://localhost:3000/hub/login')
+              }
+              return error;
+            }
+          );
+
         if(token) {
             recoverUser().then(response => {
                 if(!response) {
@@ -51,6 +94,7 @@ export function AuthProvider ({children}) {
     }
 
     async function signOut () {
+        console.log('deslogando')
         await destroyCookie(undefined, 'ru.token')
         setDinner(0)
         setLunch(0)
