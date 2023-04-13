@@ -1,37 +1,42 @@
 """Esse módulo contém a aplicação Flask.
 """
 from __future__ import annotations
-from datetime import datetime
+
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
+
 import logging
-from dataclasses import dataclass
-from flask import Flask, jsonify, request
-from enum import Enum
-from flask_cors import CORS
 import random
 import time
+from dataclasses import dataclass
+from datetime import datetime
+from enum import Enum
 
-app = Flask(__name__)
-CORS(app)
-
-gunicorn_logger = logging.getLogger('gunicorn.error')
-app.logger.handlers = gunicorn_logger.handlers
-app.logger.setLevel(gunicorn_logger.level)
-
-_ORDERS = dict()
-
-_CURRENT_ID = 1
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+from flask_pymongo import PyMongo
 
 
-class PaymentMethod(str, Enum):
-    PIX = "pix"
-    CREDIT = "credit"
+def _max_id() -> int:
+    sorted = list(mongo.db.transactions.find().sort('id', -1).limit(1))
 
-    @staticmethod
-    def from_string(method: str) -> PaymentMethod:
-        if method == "pix":
-            return PaymentMethod.PIX
-        else:
-            return PaymentMethod.CREDIT
+    if len(sorted) <= 0:
+        return 0
+    
+    return int(sorted[0]['id'])
+
+
+def _find_all():
+    def _map(o):
+        del o['_id']
+        return o
+    
+    find = mongo.db.transactions.find()
+    sorted = find.sort('id', -1)
+    return list(map(_map, sorted))
 
 
 def validate_credit_card(card_number: str) -> bool:
@@ -63,6 +68,32 @@ def validate_credit_card(card_number: str) -> bool:
     # 8. If checkSum is divisible by 10, it is valid.
     return checkSum % 10 == 0
 
+app = Flask(__name__)
+CORS(app)
+
+#app.config['MONGO_DBNAME'] = 'RU'
+app.config['MONGO_URI'] = f'mongodb+srv://{os.environ["DB_USER"]}:{os.environ["DB_PASSWORD"]}@clustersd.qb2xyaw.mongodb.net/RU?retryWrites=true&w=majority'
+
+mongo = PyMongo(app)
+
+gunicorn_logger = logging.getLogger('gunicorn.error')
+app.logger.handlers = gunicorn_logger.handlers
+app.logger.setLevel(gunicorn_logger.level)
+
+_CURRENT_ID = _max_id() + 1
+print(f'ID atual é: {_CURRENT_ID}')
+
+
+class PaymentMethod(str, Enum):
+    PIX = "pix"
+    CREDIT = "credit"
+
+    @staticmethod
+    def from_string(method: str) -> PaymentMethod:
+        if method == "pix":
+            return PaymentMethod.PIX
+        else:
+            return PaymentMethod.CREDIT
 
 @dataclass
 class Order:
@@ -74,6 +105,18 @@ class Order:
     total_value: float
     payment_method: PaymentMethod
     payment_status: str
+
+    def to_dict(self) -> dict:
+        return {
+            "name": self.name,
+            "date": self.date.strftime("%d/%m/%y-%H:%M:%S"),
+            "id": self.id,
+            "lunch_amount": self.lunch_amount,
+            "dinner_amount": self.dinner_amount,
+            "total_value": self.total_value,
+            "payment_method": self.payment_method,
+            "payment_status": self.payment_status
+        }
 
 
 @app.route('/payment/pay', methods=['POST'])
@@ -121,13 +164,16 @@ def pay():
     else:
         order.payment_status = "Forma de pagamento inválido."
 
-    time.sleep(random.randint(0, 3))
-    _ORDERS[order.id] = order
     _CURRENT_ID += 1
+    mongo.db.transactions.insert_one(order.to_dict())
 
     return jsonify(order)
 
 
 @app.route('/payment/list', methods=['GET'])
 def list_payments():
-    return jsonify(list(_ORDERS.values()))
+    def _map(o):
+        del o['_id']
+        return o
+
+    return jsonify(_find_all())
