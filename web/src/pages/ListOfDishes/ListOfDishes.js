@@ -3,15 +3,12 @@ import {
   Flex,
   Heading,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
-  Tfoot,
   Th,
   Thead,
   Tr,
-  VStack,
 } from '@chakra-ui/react';
 import { AiOutlinePlus, AiFillEdit } from 'react-icons/ai';
 import { FaTrashAlt } from 'react-icons/fa';
