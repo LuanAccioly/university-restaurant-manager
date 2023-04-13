@@ -31,6 +31,7 @@ export const Payment = () => {
   const [ccDate, setCCDate] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
+  const [tabIndex, setTabIndex] = useState(0);
 
   const [form, setForm] = useState({
     name: '',
@@ -99,7 +100,11 @@ export const Payment = () => {
       <Flex w="50%" p="30px" direction="column">
         <Heading>RuralPay</Heading>
         <Flex mt="40px" w="100%">
-          <Tabs variant="enclosed" size="lg">
+          <Tabs
+            onChange={index => setTabIndex(index)}
+            variant="enclosed"
+            size="lg"
+          >
             <TabList>
               <Tab>Cartão de Crédito</Tab>
               <Tab>Pix</Tab>
@@ -254,15 +259,17 @@ export const Payment = () => {
             paddingBottom="40px"
           >
             <Box mb="40px" w="100%">
-              <Cards
-                locale={{ valid: 'Validade' }}
-                placeholders={{ name: 'Seu nome aqui' }}
-                cvc={form.cvc}
-                expiry={ccDate}
-                focused={form.focus}
-                name={form.name}
-                number={form.number}
-              />
+              {tabIndex === 0 && (
+                <Cards
+                  locale={{ valid: 'Validade' }}
+                  placeholders={{ name: 'Seu nome aqui' }}
+                  cvc={form.cvc}
+                  expiry={ccDate}
+                  focused={form.focus}
+                  name={form.name}
+                  number={form.number}
+                />
+              )}
             </Box>
             <VStack w="100%">
               <Flex justifyContent="space-between" w="75%">
