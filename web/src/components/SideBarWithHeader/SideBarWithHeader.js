@@ -316,6 +316,18 @@ export const MobileNav = ({ onOpen, ...rest }) => {
       </Heading>
 
       <HStack spacing={{ base: '0', md: '6' }}>
+        <Flex>
+          <Text>ALMOÇOS: </Text>
+          <Text fontWeight="bold" ml="5px">
+            3
+          </Text>
+        </Flex>
+        <Flex>
+          <Text>JANTAS: </Text>
+          <Text fontWeight="bold" ml="5px">
+            3
+          </Text>
+        </Flex>
         {!user?.manager && (
           <IconButton
             size="lg"
@@ -369,7 +381,18 @@ export const MobileNav = ({ onOpen, ...rest }) => {
                   {isHub ? 'Gestão' : 'Visualização'}
                 </MenuItem>
               )}
-              <MenuItem>Perfil</MenuItem>
+              <MenuItem>
+                <VStack w="100%">
+                  <Flex w="100%" justifyContent="space-between">
+                    <Text fontWeight="bold">Qt. almoços: </Text>
+                    <Text>3</Text>
+                  </Flex>
+                  <Flex w="100%" justifyContent="space-between">
+                    <Text fontWeight="bold">Qt. jantas: </Text>
+                    <Text>3</Text>
+                  </Flex>
+                </VStack>
+              </MenuItem>
               <MenuDivider />
               <MenuItem onClick={() => handleSignOut()}>Sair</MenuItem>
             </MenuList>
