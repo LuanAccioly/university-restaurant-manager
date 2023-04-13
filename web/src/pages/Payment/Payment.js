@@ -14,8 +14,11 @@ import {
   TabPanels,
   Tabs,
   Text,
+  useColorModeValue,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
+import { useColorMode } from '@chakra-ui/react';
 import { BsFillCreditCardFill, BsGrid3X3GapFill } from 'react-icons/bs';
 import { MdPerson } from 'react-icons/md';
 import { BiMoneyWithdraw } from 'react-icons/bi';
@@ -24,14 +27,19 @@ import { useContext, useEffect, useState } from 'react';
 import { pagamentoApi } from '../../services/api';
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
+import { useNavigate } from 'react-router-dom';
 
 export const Payment = () => {
+  const navigate = useNavigate();
   const { lunch, dinner } = useContext(AuthContext);
   const [totalTickets, setTotalTickets] = useState(lunch * 3.5 + dinner * 3);
   const [ccDate, setCCDate] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
   const [tabIndex, setTabIndex] = useState(0);
+  const toast = useToast();
+  const colorMode = useColorMode();
+  const colorCard = useColorModeValue('gray.200', 'gray.700');
 
   const [form, setForm] = useState({
     name: '',
@@ -90,9 +98,42 @@ export const Payment = () => {
       .post('/payment/pay', postData)
       .then(response => {
         console.log(response);
+
+        if (response.data.payment_status === 'Pagamento aprovado') {
+          toast({
+            title: `Pagamento aprovado com sucesso!`,
+            position: 'top-right',
+            status: 'success',
+            isClosable: true,
+          });
+
+          setTimeout(() => {
+            navigate('/hub/');
+          }, 1000);
+        } else if (response.data.payment_status === 'Falha no pagamento') {
+          toast({
+            title: `Falha no pagamento, tente novamente!`,
+            position: 'top-right',
+            status: 'error',
+            isClosable: true,
+          });
+        } else {
+          toast({
+            title: `Cartão inválido. Verifique os dados do cartão!`,
+            position: 'top-right',
+            status: 'error',
+            isClosable: true,
+          });
+        }
       })
       .catch(error => {
         console.error(error);
+        toast({
+          title: `Erro ao tentar realizar pagamento!`,
+          position: 'top-right',
+          status: 'error',
+          isClosable: true,
+        });
       });
   };
   return (
@@ -201,8 +242,10 @@ export const Payment = () => {
                     </Box>
                     <HStack w="50%">
                       <Input
+                        name="expiry"
                         value={month}
                         onChange={handleMonth}
+                        onFocus={handleInputFocus}
                         textAlign="center"
                         size="lg"
                         w="100%"
@@ -212,6 +255,8 @@ export const Payment = () => {
                       />
                       <Heading size="md">/</Heading>
                       <Input
+                        name="expiry"
+                        onFocus={handleInputFocus}
                         value={year}
                         onChange={handleYear}
                         textAlign="center"
@@ -242,23 +287,24 @@ export const Payment = () => {
       </Flex>
       <Flex flex="1" justifyContent="center" alignItems="center">
         <Box
-          h="70%"
+          h="60%"
           minH="450px"
+          maxH="500px"
           w="40%"
           minW="400px"
           maxW="400px"
-          bgColor="gray.200"
+          bgColor={colorCard}
           borderRadius="25px"
           boxShadow="0px 20px 50px rgba(0, 0, 0, 0.2)"
         >
           <Flex
             alignItems="end"
-            justifyContent="center"
+            justifyContent="space-between"
             h="70%"
             direction="column"
             paddingBottom="40px"
           >
-            <Box mb="40px" w="100%">
+            <Box mt="-60px" w="100%">
               {tabIndex === 0 && (
                 <Cards
                   locale={{ valid: 'Validade' }}
