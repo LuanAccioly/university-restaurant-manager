@@ -20,33 +20,38 @@ import { useEffect, useState } from 'react';
 export const ListOfMenus = () => {
   const navigate = useNavigate();
 
-  const [menus, setMenus] = useState([])
-  const [loading, setIsLoading] = useState(true)
+  const [menus, setMenus] = useState([]);
+  const [loading, setIsLoading] = useState(true);
 
   useEffect(() => {
-   async function getDishes() {
-      const { data } = await cozinhaApi.get("/cardapio/index")
-      console.log(data)
-      setMenus(data)
-      setIsLoading(false)
+    async function getDishes() {
+      const { data } = await cozinhaApi.get('/cardapio/index');
+      console.log(data);
+      setMenus(data);
+      setIsLoading(false);
     }
 
     getDishes();
+  }, []);
 
-  }, [])
-
-  if(loading) {
-    return <Center h={'100vh'}>
-      <Spinner/>
-    </Center>
+  if (loading) {
+    return (
+      <Center h={'100vh'}>
+        <Spinner />
+      </Center>
+    );
   }
 
-
   return (
-    <Flex direction="column" w="100%" p="20px">
+    <Flex direction="column" w="100%" p="20px" h="-webkit-fit-content">
       <Flex w="100%" alignItems="center" justifyContent="space-between">
         <Heading>Visualizar cardápios</Heading>
-        <Button leftIcon={<AiOutlinePlus />} w="12rem" colorScheme="orange" onClick={() => navigate('/cal/menu/create')}>
+        <Button
+          leftIcon={<AiOutlinePlus />}
+          w="12rem"
+          colorScheme="orange"
+          onClick={() => navigate('/cal/menu/create')}
+        >
           Cadastrar cardápio
         </Button>
       </Flex>
@@ -61,14 +66,23 @@ export const ListOfMenus = () => {
           </Thead>
           {menus.map((menu, index) => (
             <Tbody key={index}>
-            <Tr>
-              <Td>{menu.menu_date.split("-")[2]}/{menu.menu_date.split("-")[1]}/{menu.menu_date.split("-")[0]}</Td>
-              <Td>{menu.turn}</Td>
-              <Td>
-                <Button onClick={() => navigate('/cal/menu/'+menu.menu_date+'/'+menu.turn)}>Editar</Button>
-              </Td>
-            </Tr>
-          </Tbody>
+              <Tr>
+                <Td>
+                  {menu.menu_date.split('-')[2]}/{menu.menu_date.split('-')[1]}/
+                  {menu.menu_date.split('-')[0]}
+                </Td>
+                <Td>{menu.turn}</Td>
+                <Td>
+                  <Button
+                    onClick={() =>
+                      navigate('/cal/menu/' + menu.menu_date + '/' + menu.turn)
+                    }
+                  >
+                    Editar
+                  </Button>
+                </Td>
+              </Tr>
+            </Tbody>
           ))}
         </Table>
       </TableContainer>
