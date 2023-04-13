@@ -42,6 +42,42 @@ class UserController {
             })
         }
     }
+    
+    async update(req: Request, res: Response) {
+        const user = req.user;
+
+        const {
+            bought
+        } = req.body;
+
+        try {
+            if(!user) {
+                return res.status(403).json({error: "Usuário não encontrado",
+                message: "Usuário não encontrado"})
+            }
+
+            const usertoUpdate = await User.findOne({email: user.email})
+            /* usertoUpdate.bought = {
+                morning: usertoUpdate.bought.morning + bought.morning,
+                night: usertoUpdate.bought.night + bought.night,
+            }; */
+            
+            const updatedUser = await User.updateOne(
+                { email: user.email },
+                { bought: {
+                    morning: usertoUpdate.bought.morning + bought.morning,
+                    night: usertoUpdate.bought.night + bought.night,
+                } } 
+              ) 
+
+            return res.json(updatedUser);
+        } catch (error) {
+            return res.status(500).json({
+                error: error,
+                message: "Falha ao listar perfil"
+            })
+        }
+    }
 
     async index(req: Request, res: Response) {
         try {
