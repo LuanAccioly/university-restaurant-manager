@@ -27,6 +27,10 @@ import {
   DrawerBody,
   Input,
   DrawerFooter,
+  Image,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuItemOption,
 } from '@chakra-ui/react';
 import {
   FiHome,
@@ -66,7 +70,7 @@ function SideBar() {
 
   return (
     <>
-      <Button ref={btnRef} colorScheme="green" onClick={onOpen}>
+      <Button ref={btnRef} colorScheme="green" onClick={onOpen} leftIcon={<FiShoppingCart />}>
         Comprar
       </Button>
       <Drawer
@@ -142,7 +146,10 @@ function SideBar() {
           </Flex>
           <DrawerFooter>
             <Button
-              onClick={() => navigate('/hub/pay')}
+              onClick={() => {
+                onClose();
+                navigate('/hub/pay')
+              }}
               w="100%"
               colorScheme="blue"
               isDisabled={
@@ -215,8 +222,9 @@ const SidebarContent = ({ onClose, ...rest }) => {
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
+          RU - Gestão
         </Text>
+        
         <CloseButton
           display={{ base: 'flex', md: 'none' }}
           onClick={onClose}
@@ -283,6 +291,8 @@ export const MobileNav = ({ onOpen, ...rest }) => {
     navigate('/hub');
   }
 
+  console.log(user)
+
   return (
     <Flex
       ml={{ base: 0, md: !isHub ? 60 : 0 }}
@@ -303,20 +313,21 @@ export const MobileNav = ({ onOpen, ...rest }) => {
         icon={<FiMenu />}
       />
 
-      <Text
+      {/* <Text
         display={{ base: 'flex', md: 'none' }}
         fontSize="2xl"
         fontFamily="monospace"
         fontWeight="bold"
       >
         Logo
-      </Text>
-      <Heading size="md" cursor={'pointer'} onClick={() => navigate('/hub')}>
+      </Text> */}
+      
+      <Heading size="md" cursor={'pointer'} onClick={() => navigate('/hub')} fontFamily={'sans-serif'}>
         UFRPE - RU
       </Heading>
 
       <HStack spacing={{ base: '0', md: '6' }}>
-        <Flex>
+        {/* <Flex>
           <Text>ALMOÇOS: </Text>
           <Text fontWeight="bold" ml="5px">
             3
@@ -327,15 +338,8 @@ export const MobileNav = ({ onOpen, ...rest }) => {
           <Text fontWeight="bold" ml="5px">
             3
           </Text>
-        </Flex>
-        {!user?.manager && (
-          <IconButton
-            size="lg"
-            variant="ghost"
-            aria-label="open menu"
-            icon={<FiShoppingCart />}
-          />
-        )}
+        </Flex> */}
+
         <ColorModeSwitcher />
         <Flex alignItems={'center'}>
           <Menu>
@@ -381,18 +385,21 @@ export const MobileNav = ({ onOpen, ...rest }) => {
                   {isHub ? 'Gestão' : 'Visualização'}
                 </MenuItem>
               )}
-              <MenuItem>
+              <MenuDivider />
+              <MenuOptionGroup title='Fichas restantes'>
+              <MenuItemOption cursor={'default'} _hover={{}} pointerEvents="none">
                 <VStack w="100%">
                   <Flex w="100%" justifyContent="space-between">
-                    <Text fontWeight="bold">Qt. almoços: </Text>
-                    <Text>3</Text>
+                    <Text >Almoços: </Text>
+                    <Text fontWeight="bold">{user.bought.morning}</Text>
                   </Flex>
                   <Flex w="100%" justifyContent="space-between">
-                    <Text fontWeight="bold">Qt. jantas: </Text>
-                    <Text>3</Text>
+                    <Text >Jantas: </Text>
+                    <Text fontWeight="bold">{user.bought.night}</Text>
                   </Flex>
                 </VStack>
-              </MenuItem>
+              </MenuItemOption >
+              </MenuOptionGroup>
               <MenuDivider />
               <MenuItem onClick={() => handleSignOut()}>Sair</MenuItem>
             </MenuList>

@@ -36,7 +36,7 @@ export const ListOfMenus = () => {
 
   if (loading) {
     return (
-      <Center h={'100vh'}>
+      <Center h={'100vh'} w={'100%'}>
         <Spinner />
       </Center>
     );

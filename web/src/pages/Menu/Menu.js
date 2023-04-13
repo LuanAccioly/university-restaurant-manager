@@ -39,7 +39,18 @@ export const Menu = ({data}) => {
     },
   };
 
-  if(!data) return <h1>Sem cardápio para hoje</h1>
+  if(!data) return <Center h={"75vh"} overflow={'hidden'}>
+    <Image
+     src="https://assets.materialup.com/uploads/57a21feb-709a-43d0-8ba1-d066ccb48390/preview.jpg"
+     borderRadius="40px"
+          padding="20px"
+          boxSize="80%"
+          size="contain"
+          objectFit="cover"
+          objectPosition="center"
+     />
+    <Heading  fontSize='6xl' fontFamily={'sans-serif'}>Nenhum cardápio para hoje</Heading >
+    </Center>
 
   console.log(data.pp_1.picture)
 

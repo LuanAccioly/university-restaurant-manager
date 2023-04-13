@@ -30,10 +30,9 @@ export const ListOfTransactions = () => {
     getTransactions();
   }, []);
 
-  console.log(transactions);
   if (loading) {
     return (
-      <Center w={'100vh'}>
+      <Center h={'100vh'} w={'100%'}>
         <Spinner />
       </Center>
     );

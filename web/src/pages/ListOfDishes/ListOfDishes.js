@@ -9,6 +9,7 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from '@chakra-ui/react';
 import { AiOutlinePlus, AiFillEdit } from 'react-icons/ai';
 import { FaTrashAlt } from 'react-icons/fa';
@@ -19,6 +20,8 @@ import { useNavigate } from 'react-router';
 
 export const ListOfDishes = () => {
   const navigate = useNavigate();
+  const toast = useToast();
+
 
   const [dishes, setDishes] = useState([]);
   const [loading, setIsLoading] = useState(true);
@@ -36,10 +39,38 @@ export const ListOfDishes = () => {
 
   if (loading) {
     return (
-      <Center h={'100vh'}>
+      <Center h={'100vh'} w={'100%'}>
         <Spinner />
       </Center>
     );
+  }
+
+  const handleDelete = async (id) => {
+
+    try {
+      await cozinhaApi.delete("/pratos/"+id)
+
+      toast({
+        title: `Prato excluido com sucesso!`,
+        position: 'top-right',
+        status: 'success',
+        isClosable: true,
+      })
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      // handle successful response
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: 'Erro ao deletar prato',
+        position: 'top-right',
+        status: 'error',
+        isClosable: true,
+      })
+      
+    }
   }
 
   return (
@@ -89,7 +120,14 @@ export const ListOfDishes = () => {
                   </Button>
                 </Td>
                 <Td textAlign="end">
-                  <Button size="sm" colorScheme="red">
+                  <Button size="sm" colorScheme="red" onClick={() => {
+                    const confirmed = window.confirm('Tem certeza que deseja excluir este prato ?');
+                    if (confirmed) {
+                      handleDelete(dish._id)
+                    } else {
+                      
+                    }
+                  }}>
                     <FaTrashAlt />
                   </Button>
                 </Td>

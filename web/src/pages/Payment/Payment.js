@@ -24,14 +24,14 @@ import { MdPerson } from 'react-icons/md';
 import { BiMoneyWithdraw } from 'react-icons/bi';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useContext, useEffect, useState } from 'react';
-import { pagamentoApi } from '../../services/api';
+import { pagamentoApi, userApi } from '../../services/api';
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import { useNavigate } from 'react-router-dom';
 
 export const Payment = () => {
   const navigate = useNavigate();
-  const { lunch, dinner } = useContext(AuthContext);
+  const { lunch, dinner, setDinner, setLunch } = useContext(AuthContext);
   const [totalTickets, setTotalTickets] = useState(lunch * 3.5 + dinner * 3);
   const [ccDate, setCCDate] = useState('');
   const [month, setMonth] = useState('');
@@ -96,7 +96,7 @@ export const Payment = () => {
 
     pagamentoApi
       .post('/payment/pay', postData)
-      .then(response => {
+      .then(async (response) => {
         console.log(response);
 
         if (response.data.payment_status === 'Pagamento aprovado') {
@@ -107,9 +107,30 @@ export const Payment = () => {
             isClosable: true,
           });
 
-          setTimeout(() => {
-            navigate('/hub/');
-          }, 1000);
+          try {
+            const { data } = await userApi.put('/user/', {
+              bought: {
+                morning: lunch,
+                night: dinner,
+            }
+            });
+
+            setTimeout(() => {
+              setDinner(0);
+              setLunch(0);
+              window.location.replace('http://localhost:3000/hub/')
+            }, 1000);
+
+            } catch (error) {
+            console.error(error);
+            toast({
+              title: `Erro na compra`,
+              position: 'top-right',
+              status: 'error',
+              isClosable: true,
+            });
+          }
+
         } else if (response.data.payment_status === 'Falha no pagamento') {
           toast({
             title: `Falha no pagamento, tente novamente!`,
@@ -251,6 +272,7 @@ export const Payment = () => {
                         w="100%"
                         maxLength="2"
                         placeholder="XX"
+                        type='number'
                         isRequired
                       />
                       <Heading size="md">/</Heading>
@@ -263,6 +285,7 @@ export const Payment = () => {
                         w="100%"
                         size="lg"
                         maxLength="2"
+                        type='number'
                         placeholder="XX"
                         isRequired
                       />
