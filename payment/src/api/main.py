@@ -81,7 +81,7 @@ def pay():
     global _CURRENT_ID
     data = request.get_json(force=True)
     order = Order(data["name"],
-                  datetime.now(),
+                  datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
                   _CURRENT_ID,
                   data["lunch_amount"],
                   data["dinner_amount"],
@@ -130,4 +130,4 @@ def pay():
 
 @app.route('/payment/list', methods=['GET'])
 def list_payments():
-    return jsonify(list(_ORDERS.values()))
+    return jsonify(list(reversed(_ORDERS.values())))
