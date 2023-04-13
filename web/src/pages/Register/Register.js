@@ -158,18 +158,18 @@ export const Register = () => {
                 onChange={e => setMatricula(e.target.value)}
                 placeholder=""
               />
-              <Checkbox
-                marginTop="15px"
-                defaultChecked
-                w={'100%'}
-                isChecked={registred}
-                onChange={e => {
-                  setRegistred(e.target.checked);
-                }}
-              >
-                Sou aluno matriculado na UFRPE
-              </Checkbox>
             </FormControl>
+            <Checkbox
+              marginTop="15px"
+              defaultChecked
+              w={'100%'}
+              isChecked={registred}
+              onChange={e => {
+                setRegistred(e.target.checked);
+              }}
+            >
+              Sou aluno matriculado na UFRPE
+            </Checkbox>
           </Flex>
           <HStack w="100%" spacing={3}>
             <Box flex={1}>
