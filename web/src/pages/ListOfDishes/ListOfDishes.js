@@ -13,7 +13,8 @@ import {
   Tr,
   VStack,
 } from '@chakra-ui/react';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus, AiFillEdit } from 'react-icons/ai';
+import { FaTrashAlt } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { Center, Spinner } from '@chakra-ui/react';
 import { cozinhaApi } from '../../services/api';
@@ -65,6 +66,7 @@ export const ListOfDishes = () => {
               <Th>Descrição</Th>
               <Th>Tipo</Th>
               <Th textAlign="end">Edição</Th>
+              <Th textAlign="end">Excluir</Th>
             </Tr>
           </Thead>
           {dishes?.map((dish, index) => (
@@ -82,8 +84,16 @@ export const ListOfDishes = () => {
                 </Td>
                 <Td>{dish.type}</Td>
                 <Td textAlign="end">
-                  <Button onClick={() => navigate('/cal/dish/' + dish._id)}>
-                    Editar
+                  <Button
+                    size="sm"
+                    onClick={() => navigate('/cal/dish/' + dish._id)}
+                  >
+                    <AiFillEdit />
+                  </Button>
+                </Td>
+                <Td textAlign="end">
+                  <Button size="sm" colorScheme="red">
+                    <FaTrashAlt />
                   </Button>
                 </Td>
               </Tr>
