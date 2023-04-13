@@ -21,5 +21,6 @@ routes.post("/create", validateToken, upload.single("image"), PratoController.cr
 routes.put("/update/:id", validateToken, upload.single("image"), PratoController.update)
 routes.get("/index", validateToken, PratoController.index)
 routes.get("/:id", validateToken, PratoController.view)
+routes.delete("/:id", validateToken, PratoController.delete)
 
 export default routes;

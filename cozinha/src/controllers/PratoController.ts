@@ -15,6 +15,8 @@ class PratoController {
 
         const { filename } = req.file
 
+        if(!req.user.manager) return res.sendStatus(401)
+
         try {
             const prato = await Prato.create({
                 name,
@@ -44,6 +46,8 @@ class PratoController {
         const {
             id
         } = req.params;
+
+        if(!req.user.manager) return res.sendStatus(401)
 
         const prato = await Prato.findOne({
             id
@@ -113,6 +117,7 @@ class PratoController {
             id
         } = req.params;
 
+        if(!req.user.manager) return res.sendStatus(401)
 
         try {
             const pratos = await Prato.find().then(pratos => pratos.map(prato => prato.toJSON()))
@@ -127,10 +132,34 @@ class PratoController {
         }
     }
 
+    async delete(req: Request, res: Response) {
+        const {
+            id
+        } = req.params;
+
+        if(!req.user.manager) return res.sendStatus(401)
+
+        try {
+            await Prato.findOneAndDelete({
+                _id: new Types.ObjectId(id)
+            })
+
+            return res.status(200).json({
+                message: "Prato excluido com sucesso"
+            })
+        } catch (error) {
+            return res.status(400).json({
+                error: error,
+                message: "Falha no registro do usuário"
+            })
+        }
+    }
     async view(req: Request, res: Response) {
         const {
             id
         } = req.params;
+
+        if(!req.user.manager) return res.sendStatus(401)
 
         try {
             const prato = await Prato.findOne({
