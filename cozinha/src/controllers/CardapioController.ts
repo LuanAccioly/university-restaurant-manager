@@ -203,6 +203,30 @@ class CardapioController {
         }
     }
 
+    async delete(req: Request, res: Response) {
+        const {
+            menu_date,
+            turn
+        } = req.params;
+
+
+        try {
+            await Cardapio.findOneAndDelete({
+                menu_date,
+                turn
+            })
+        
+            return res.status(200).json({
+                message: "Cardapio excluido com sucesso"
+            })
+        } catch (error) {
+            return res.status(400).json({
+                error: error,
+                message: "Falha na exclusão do Cardapio"
+            })
+        }
+    }
+
 }
 
 export default new CardapioController

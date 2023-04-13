@@ -10,5 +10,6 @@ routes.post("/create", validateToken,  CardapioController.create)
 routes.put("/update/:menu_date/:turn", validateToken,  CardapioController.update)
 routes.get("/index", CardapioController.index)
 routes.get("/:menu_date/:turn", CardapioController.view)
+routes.delete("/:menu_date/:turn", CardapioController.delete)
 
 export default routes;
