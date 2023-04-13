@@ -42,7 +42,7 @@ export function AuthProvider ({children}) {
               return error;
             }
           );
-          cozinhaApi.interceptors.response.use(
+        cozinhaApi.interceptors.response.use(
             (response) => {
               return response;
             },
@@ -93,8 +93,14 @@ export function AuthProvider ({children}) {
         setUser(user)
     }
 
+    function logUser () {
+        console.log(user)
+    }
+
     async function signOut () {
-        await destroyCookie(undefined, 'ru.token')
+        await destroyCookie(undefined, 'ru.token', { path: '/hub' })
+        await destroyCookie(undefined, 'ru.token', { path: '/cal' })
+        await destroyCookie(undefined, 'ru.token', { path: '/' })
         const { 'ru.token': token } = parseCookies()
         if(!token) {
             setDinner(0)
@@ -113,7 +119,7 @@ export function AuthProvider ({children}) {
     }
 
     return (
-        <AuthContext.Provider value={{user, isAuthenticated, signIn, signOut, isHub, setIsHub, isLoading, setLunch, setDinner, dinner, lunch}}>
+        <AuthContext.Provider value={{user, isAuthenticated, signIn, signOut, isHub, setIsHub, isLoading, setLunch, setDinner, dinner, lunch, logUser}}>
             {children}
         </AuthContext.Provider>
     )

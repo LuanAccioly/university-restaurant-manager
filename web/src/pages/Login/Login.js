@@ -1,4 +1,4 @@
-import { Box, Button, Center, Link, VStack} from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Link, VStack} from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { EmailInput } from "../../components/EmailInput/EmailInput";
@@ -37,9 +37,10 @@ export const Login = () => {
                     <PasswordInput marginTop={150} value={password} onChange={(event) => setPassword(event.target.value)} />
                     <Button w={"100%"} colorScheme='green' onClick={handleSignIn}>Entrar</Button>
                 </VStack>
-                <Box>
+                <Flex flexDir={'row'} alignItems={'center'} justifyContent={'space-between'}>
                     <Link onClick={() => navigate('/hub/register')} fontSize={14} color="blue.400">Cadastre-se</Link>
-                </Box>
+                    <Link onClick={() => navigate('/hub')} fontSize={14} color="blue.400">Voltar</Link>
+                </Flex>
             </Box>
 
         </Center>

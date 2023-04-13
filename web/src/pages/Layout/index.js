@@ -15,11 +15,15 @@ export const Layout = () => {
     if(isLoading) return;
 
     if(location.pathname.startsWith('/cal') && isHub && isAuthenticated && !isLoading) {
-      setIsHub(false)
+      if(!user?.manager) {
+        navigate("/hub");
+      } else {
+        setIsHub(false)
+      }
     }
 
-    if(!isAuthenticated && location.pathname !== '/hub/register' && location.pathname !== '/hub' && !isLoading) {
-      navigate("/hub/login");
+    if(!isAuthenticated && location.pathname !== '/hub/register' && location.pathname !== '/hub/login' && location.pathname !== '/hub' && !isLoading) {
+      navigate("/hub");
     }
 
     if(isAuthenticated && (location.pathname === '/hub/login' || location.pathname === '/hub/register') && !isLoading) {

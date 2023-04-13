@@ -6,15 +6,9 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 export const Header = () => {
   const outlineColor = useColorModeValue('gray.200', 'gray.700');
-  const {signOut} = useContext(AuthContext)
+  const {signOut, logUser} = useContext(AuthContext)
 
   const navigate = useNavigate();
-
-  async function handleSignOut(){
-     signOut()
-    navigate('/hub')
-}
-
 
   return (
     <Flex
@@ -29,7 +23,10 @@ export const Header = () => {
       </Heading>
       <Flex>
         <ColorModeSwitcher />
-        <Button onClick={handleSignOut}>Sair</Button>
+        <Button onClick={() => {
+                logUser()
+                signOut()
+                }}>Sair</Button>
       </Flex>
     </Flex>
   );

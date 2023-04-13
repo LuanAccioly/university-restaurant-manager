@@ -4,7 +4,10 @@ import {
   Center,
   color,
   Flex,
+  FormControl,
+  FormLabel,
   Heading,
+  HStack,
   Input,
   Spinner,
   Text,
@@ -19,6 +22,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { cozinhaApi } from '../../services/api';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
+import NutriTable from '../../components/NutriTable/NutriTable';
 
 export const WeeklyMenu = () => {
   const colorMode = useColorMode();
@@ -80,6 +84,7 @@ export const WeeklyMenu = () => {
   const [menu, setMenu] = useState()
   const [loading, setIsLoading] = useState(true)
 
+
   useEffect(() => {
    async function getDishes() {
       const { data } = await cozinhaApi.get("/cardapio/"+selectedDate+"/"+selectedTurn)
@@ -97,6 +102,7 @@ export const WeeklyMenu = () => {
 
   }, [selectedDate, selectedTurn])
 
+
   if(loading) {
     return <Center h={'100vh'} w={'100%'}>
       <Spinner/>
@@ -105,8 +111,8 @@ export const WeeklyMenu = () => {
 
 
   return (
-    <Flex w="100%">
-      <VStack w="100%">
+    <Flex w="100%" h={isAuthenticated ? '92vh' : '100vh'}>
+      <VStack w="100%" h={'100%'}>
         <Flex mt="10px" alignItems="center" justify="space-between" w="98%">
           <Input
             w="150px"
@@ -135,7 +141,28 @@ export const WeeklyMenu = () => {
             {!isAuthenticated && <ColorModeSwitcher />}
           </Flex>
         </Flex>
-        <Menu data={menu} loading={loading} />
+        {!menu ? 
+        <Center h={'100vh'} w={'100%'}>
+            <Heading>Houve um problema ao carregar os dados, tente novamente mais tarde</Heading>
+        </Center> : (
+          <>
+            <Menu data={menu} loading={loading} />
+                <Heading>Tabelas Nutricionais</Heading>
+                <Flex flexWrap={'wrap'} justifyContent={'center'} pt={'4'} gap={20}>
+                    <NutriTable dish={menu.pp_1} />
+                    <NutriTable dish={menu.pp_2} />
+                    <NutriTable dish={menu.fast} />
+                    <NutriTable dish={menu.grelha} />
+                    <NutriTable dish={menu.guarnicao} />
+                    <NutriTable dish={menu.salad_cr} />
+                    <NutriTable dish={menu.salad_cuz} />
+                    <NutriTable dish={menu.sobremesa} />
+                    <NutriTable dish={menu.suco} />
+                    <NutriTable dish={menu.veg} />
+                </Flex>
+          </>
+        )}
+        
       </VStack>
     </Flex>
   );

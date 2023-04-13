@@ -13,11 +13,12 @@ import {
   PopoverAnchor,
 } from '@chakra-ui/react';
 
-function Dish({ image, title, dish, description }) {
+function Dish({ image, title, dish, description, table }) {
   const { colorMode } = useColorMode();
   const imageStyle = {
     filter: colorMode === 'dark' ? 'brightness(0.7)' : 'brightness(1)',
   };
+
   return (
     <Popover>
       <PopoverTrigger>

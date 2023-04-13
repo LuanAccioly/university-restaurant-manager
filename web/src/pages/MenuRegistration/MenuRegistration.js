@@ -170,7 +170,7 @@ export const MenuRegistration = () => {
               </Heading>
               <Select value={pp1} onChange={(event) => setPp1(event.target.value)}>
               <option value="">Selecione</option>
-                {dishes.filter(dish => dish.type === 'comum').map((dish, index) => (
+                {dishes?.filter(dish => dish.type === 'comum').map((dish, index) => (
                   <option key={index} value={dish._id}>{dish.name}</option>
                 ))}
               </Select>
@@ -181,7 +181,7 @@ export const MenuRegistration = () => {
               </Heading>
               <Select  value={pp2} onChange={(event) => setPp2(event.target.value)}>
               <option value="">Selecione</option>
-              {dishes.filter(dish => dish.type === 'comum').map((dish, index) => (
+              {dishes?.filter(dish => dish.type === 'comum').map((dish, index) => (
                   <option key={index} value={dish._id}>{dish.name}</option>
                 ))}
               </Select>
@@ -195,7 +195,7 @@ export const MenuRegistration = () => {
               </Heading>
               <Select value={fast} onChange={(event) => setFast(event.target.value)}>
               <option value="">Selecione</option>
-              {dishes.filter(dish => dish.type === 'comum').map((dish, index) => (
+              {dishes?.filter(dish => dish.type === 'comum').map((dish, index) => (
                   <option key={index} value={dish._id}>{dish.name}</option>
                 ))}
               </Select>
@@ -206,7 +206,7 @@ export const MenuRegistration = () => {
               </Heading>
               <Select placeholder="" value={grelha} onChange={(event) => setGrelha(event.target.value)}>
               <option value="">Selecione</option>
-              {dishes.filter(dish => dish.type === 'comum').map((dish, index) => (
+              {dishes?.filter(dish => dish.type === 'comum').map((dish, index) => (
                   <option key={index} value={dish._id}>{dish.name}</option>
                 ))}
               </Select>
@@ -220,7 +220,7 @@ export const MenuRegistration = () => {
               </Heading>
               <Select value={veg} onChange={(event) => setVeg(event.target.value)}>
               <option value="">Selecione</option>
-              {dishes.filter(dish => dish.type === 'vegetariana').map((dish, index) => (
+              {dishes?.filter(dish => dish.type === 'vegetariana').map((dish, index) => (
                   <option key={index} value={dish._id}>{dish.name}</option>
                 ))}
               </Select>
@@ -231,7 +231,7 @@ export const MenuRegistration = () => {
               </Heading>
               <Select placeholder="" value={guarnicao} onChange={(event) => setGuarnicao(event.target.value)}>
               <option value="">Selecione</option>
-              {dishes.filter(dish => dish.type === 'guarnicao').map((dish, index) => (
+              {dishes?.filter(dish => dish.type === 'guarnicao').map((dish, index) => (
                   <option key={index} value={dish._id}>{dish.name}</option>
                 ))}
               </Select>
@@ -245,7 +245,7 @@ export const MenuRegistration = () => {
               </Heading>
               <Select value={saladCr} onChange={(event) => setSaladCr(event.target.value)}>
               <option value="">Selecione</option>
-              {dishes.filter(dish => dish.type === 'sal_crua').map((dish, index) => (
+              {dishes?.filter(dish => dish.type === 'sal_crua').map((dish, index) => (
                   <option key={index} value={dish._id}>{dish.name}</option>
                 ))}
               </Select>
@@ -256,7 +256,7 @@ export const MenuRegistration = () => {
               </Heading>
               <Select placeholder="" value={saladCuz} onChange={(event) => setSaladCuz(event.target.value)}>
               <option value="">Selecione</option>
-              {dishes.filter(dish => dish.type === 'sal_coz').map((dish, index) => (
+              {dishes?.filter(dish => dish.type === 'sal_coz').map((dish, index) => (
                   <option key={index} value={dish._id}>{dish.name}</option>
                 ))}
               </Select>
@@ -270,7 +270,7 @@ export const MenuRegistration = () => {
               </Heading>
               <Select value={sobremesa} onChange={(event) => setSobremesa(event.target.value)}>
               <option value="">Selecione</option>
-              {dishes.filter(dish => dish.type === 'sobremesa').map((dish, index) => (
+              {dishes?.filter(dish => dish.type === 'sobremesa').map((dish, index) => (
                   <option key={index} value={dish._id}>{dish.name}</option>
                 ))}
               </Select>
@@ -281,7 +281,7 @@ export const MenuRegistration = () => {
               </Heading>
               <Select placeholder="" value={suco} onChange={(event) => setSuco(event.target.value)}>
               <option value="">Selecione</option>
-              {dishes.filter(dish => dish.type === 'bebida').map((dish, index) => (
+              {dishes?.filter(dish => dish.type === 'bebida').map((dish, index) => (
                   <option key={index} value={dish._id}>{dish.name}</option>
                 ))}
               </Select>

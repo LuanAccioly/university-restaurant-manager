@@ -161,6 +161,16 @@ export const DishRegistration = ({ image }) => {
         }
       })
 
+      if(!data) {
+        toast({
+          title: `Erro ao cadastrar prato`,
+          position: 'top-right',
+          status: 'error',
+          isClosable: true,
+        })
+        return;
+      }
+
       toast({
         title: `Prato cadastrado com sucesso!`,
         position: 'top-right',
@@ -173,7 +183,7 @@ export const DishRegistration = ({ image }) => {
       }, 1000);
       // handle successful response
     } catch (error) {
-      console.error(error);
+      console.error(error, 'edasdjsakdjask');
       toast({
         title: `Erro ao cadastrar prato`,
         position: 'top-right',
@@ -336,7 +346,7 @@ export const DishRegistration = ({ image }) => {
               </ModalBody>
 
               <ModalFooter>
-                <Button colorScheme="blue" mr={3}>
+                <Button colorScheme="blue" mr={3} onClick={onClose}>
                   Salvar
                 </Button>
                 <Button onClick={onClose}>Cancelar</Button>

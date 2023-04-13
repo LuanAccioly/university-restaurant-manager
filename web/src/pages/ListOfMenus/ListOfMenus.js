@@ -96,7 +96,7 @@ export const ListOfMenus = () => {
               <Th textAlign="end">Excluir</Th>
             </Tr>
           </Thead>
-          {menus.map((menu, index) => (
+          {menus?.map((menu, index) => (
             <Tbody key={index}>
               <Tr>
                 <Td>

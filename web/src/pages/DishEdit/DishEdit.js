@@ -359,7 +359,7 @@ export const DishEdit = ({ image }) => {
               </ModalBody>
 
               <ModalFooter>
-                <Button colorScheme="blue" mr={3}>
+                <Button colorScheme="blue" mr={3} onClick={onClose}>
                   Salvar
                 </Button>
                 <Button onClick={onClose}>Cancelar</Button>

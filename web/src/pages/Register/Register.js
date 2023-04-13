@@ -123,8 +123,9 @@ export const Register = () => {
         />
       </Box>
       <Box flex={1} pt={'20px'} paddingRight="20px">
-        <Flex>
+        <Flex flexDir={'row'} alignItems={'center'} justifyContent={'space-between'}>
           <Heading>Cadastro</Heading>
+          <Button w="200px" onClick={() => navigate('/hub')}>Voltar para Home</Button>
         </Flex>
 
         <VStack mt={50} spacing={'30px'}>

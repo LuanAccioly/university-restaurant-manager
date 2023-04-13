@@ -87,9 +87,38 @@ export const Menu = ({data, loading}) => {
               </Flex>
             </Box>
           </Box>
-          <Box bg="green.100" w="300px" borderRadius="15px" p="30px">
+          <Box
+          cursor="pointer"
+          w={['70%', '85%']}
+          h={['auto', '95%']}
+          borderWidth="2px"
+          borderRadius="15px"
+          overflow="hidden"
+          maxW="330px"
+          zIndex={'base'}
+        >
+          <Box
+            bgImage={`url('http://localhost:3002/${data.suco.picture}')`}
+            bgPosition="center"
+            bgSize="cover"
+            h={['150px', '200px']}
+            width="100%"
+            flex="1"
+            style={imageStyle}
+            // borderRadius="lg"
+          />
+          <Box p="5">
+          <Heading as="h2" size="xl">
+                  Suco do dia:
+                </Heading>
+                <Heading as="h4" size="md">
+                  {data.suco.name}
+                </Heading>
+          </Box>
+        </Box>
+          {/* <Box bg="green.100" w="300px" borderRadius="15px" p="30px">
             <Image
-              src={`http://localhost:3002/${data.pp_1.picture}`}
+              src={`http://localhost:3002/${data.suco.picture}`}
               boxSize="120px"
               marginBottom="30px"
             />
@@ -103,7 +132,7 @@ export const Menu = ({data, loading}) => {
                 </Heading>
               </Box>
             </Flex>
-          </Box>
+          </Box> */}
         </Flex>
 
         <Flex w={'100%'}>
@@ -117,48 +146,56 @@ export const Menu = ({data, loading}) => {
             autoPlaySpeed={2500}
           >
             <Dish
+              table={data.nutri_table}
               title="Prato Principal 2"
               dish={data.pp_2.name}
               description={data.pp_2.description}
               image={`http://localhost:3002/${data.pp_2.picture}`}
             />
             <Dish
+              table={data.nutri_table}
               title="Fast Grill"
               dish={data.fast.name}
               description={data.fast.description}
               image={`http://localhost:3002/${data.fast.picture}`}
             />
             <Dish
+              table={data.nutri_table}
               title="Na Grelha"
               dish={data.grelha.name}
               description={data.grelha.description}
               image={`http://localhost:3002/${data.grelha.picture}`}
             />
             <Dish
+              table={data.nutri_table}
               title="Vegetariano"
               dish={data.veg.name}
               description={data.veg.description}
               image={`http://localhost:3002/${data.veg.picture}`}
             />
             <Dish
+              table={data.nutri_table}
               title="Guarnição"
               dish={data.guarnicao.name}
               description={data.guarnicao.description}
               image={`http://localhost:3002/${data.guarnicao.picture}`}
             />
             <Dish
+              table={data.nutri_table}
               title="Salada Crua"
               dish={data.salad_cr.name}
               description={data.salad_cr.description}
               image={`http://localhost:3002/${data.salad_cr.picture}`}
             />
             <Dish
+              table={data.nutri_table}
               title="Salada Cozida"
               dish={data.salad_cuz.name}
               description={data.salad_cuz.description}
               image={`http://localhost:3002/${data.salad_cuz.picture}`}
             />
             <Dish
+              table={data.nutri_table}
               title="Sobremesa"
               dish={data.sobremesa.name}
               description={data.sobremesa.description}
