@@ -11,6 +11,7 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { cozinhaApi } from '../../services/api';
@@ -20,6 +21,8 @@ import { FaTrashAlt } from 'react-icons/fa';
 
 export const ListOfMenus = () => {
   const navigate = useNavigate();
+  const toast = useToast();
+
 
   const [menus, setMenus] = useState([]);
   const [loading, setIsLoading] = useState(true);
@@ -27,13 +30,40 @@ export const ListOfMenus = () => {
   useEffect(() => {
     async function getDishes() {
       const { data } = await cozinhaApi.get('/cardapio/index');
-      console.log(data);
       setMenus(data);
       setIsLoading(false);
     }
 
     getDishes();
   }, []);
+
+  const handleDelete = async (id) => {
+
+    try {
+      await cozinhaApi.delete("/cardapio/"+id)
+
+      toast({
+        title: `Cardapio excluido com sucesso!`,
+        position: 'top-right',
+        status: 'success',
+        isClosable: true,
+      })
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      // handle successful response
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: 'Erro ao deletar cardapio',
+        position: 'top-right',
+        status: 'error',
+        isClosable: true,
+      })
+      
+    }
+  }
 
   if (loading) {
     return (
@@ -46,7 +76,7 @@ export const ListOfMenus = () => {
   return (
     <Flex direction="column" w="100%" p="20px" h="-webkit-fit-content">
       <Flex w="100%" alignItems="center" justifyContent="space-between">
-        <Heading>Visualizar cardápios</Heading>
+        <Heading fontFamily={'heading'}>Visualizar Cardápios</Heading>
         <Button
           leftIcon={<AiOutlinePlus />}
           w="12rem"
@@ -74,7 +104,7 @@ export const ListOfMenus = () => {
                   {menu.menu_date.split('-')[0]}
                 </Td>
                 <Td>{menu.turn}</Td>
-                <Td>
+                <Td textAlign="end">
                   <Button
                     size="sm"
                     onClick={() =>
@@ -85,7 +115,14 @@ export const ListOfMenus = () => {
                   </Button>
                 </Td>
                 <Td textAlign="end">
-                  <Button size="sm" colorScheme="red">
+                  <Button size="sm" colorScheme="red" onClick={() => {
+                    const confirmed = window.confirm('Tem certeza que deseja excluir este cardapio ?');
+                    if (confirmed) {
+                      handleDelete(menu.menu_date + '/' + menu.turn)
+                    } else {
+                      
+                    }
+                  }}>
                     <FaTrashAlt />
                   </Button>
                 </Td>

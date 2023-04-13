@@ -29,7 +29,6 @@ export const ListOfDishes = () => {
   useEffect(() => {
     async function getDishes() {
       const { data } = await cozinhaApi.get('/pratos/index');
-      console.log(data);
       setDishes(data);
       setIsLoading(false);
     }
@@ -76,7 +75,7 @@ export const ListOfDishes = () => {
   return (
     <Flex direction="column" w="100%" p="20px" h="-webkit-fit-content">
       <Flex w="100%" alignItems="center" justifyContent="space-between">
-        <Heading>Visualizar pratos</Heading>
+        <Heading fontFamily={'heading'}>Visualizar Pratos</Heading>
         <Button
           leftIcon={<AiOutlinePlus />}
           w="11rem"
