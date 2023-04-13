@@ -172,8 +172,4 @@ def pay():
 
 @app.route('/payment/list', methods=['GET'])
 def list_payments():
-    def _map(o):
-        del o['_id']
-        return o
-
     return jsonify(_find_all())
