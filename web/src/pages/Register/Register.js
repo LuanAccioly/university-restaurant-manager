@@ -20,7 +20,7 @@ import NormalInput from '../../components/NormalInput/NormalInput';
 import { AuthContext } from '../../contexts/AuthContext';
 import { userApi } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
-import Diamond from '../../assets/images/dish.png';
+import Diamond from '../../assets/images/register.webp';
 
 export const Register = () => {
   const toast = useToast();
@@ -113,19 +113,23 @@ export const Register = () => {
       <Box w={'60%'} position="relative">
         <Image
           borderRadius="40px"
-          padding="20px"
+          padding="100px"
           style={imageStyle}
           src={Diamond}
           boxSize="100%"
-          size="contain"
-          objectFit="cover"
-          objectPosition="center"
+          objectFit="contain"
         />
       </Box>
       <Box flex={1} pt={'20px'} paddingRight="20px">
-        <Flex flexDir={'row'} alignItems={'center'} justifyContent={'space-between'}>
+        <Flex
+          flexDir={'row'}
+          alignItems={'center'}
+          justifyContent={'space-between'}
+        >
           <Heading>Cadastro</Heading>
-          <Button w="200px" onClick={() => navigate('/hub')}>Voltar para Home</Button>
+          <Button w="200px" onClick={() => navigate('/hub')}>
+            Voltar para Home
+          </Button>
         </Flex>
 
         <VStack mt={50} spacing={'30px'}>

@@ -43,11 +43,12 @@ import {
   FiShoppingCart,
   FiChevronDown,
 } from 'react-icons/fi';
-import { BiDish, BiFoodMenu , BiTransfer} from 'react-icons/bi';
+import { BiDish, BiFoodMenu, BiTransfer } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 import { AuthContext } from '../../contexts/AuthContext';
+import Logo from '../../assets/images/Brasão_UFRPE.png';
 
 const LinkItems = [
   { name: 'Home', icon: FiHome, ref: '/' },
@@ -69,7 +70,12 @@ function SideBar() {
 
   return (
     <>
-      <Button ref={btnRef} colorScheme="green" onClick={onOpen} leftIcon={<FiShoppingCart />}>
+      <Button
+        ref={btnRef}
+        colorScheme="green"
+        onClick={onOpen}
+        leftIcon={<FiShoppingCart />}
+      >
         Comprar
       </Button>
       <Drawer
@@ -147,7 +153,7 @@ function SideBar() {
             <Button
               onClick={() => {
                 onClose();
-                navigate('/hub/pay')
+                navigate('/hub/pay');
               }}
               w="100%"
               colorScheme="blue"
@@ -200,9 +206,7 @@ export function SidebarWithHeader({ children }) {
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }}>
-        {children}
-      </Box>
+      <Box ml={{ base: 0, md: 60 }}>{children}</Box>
     </Box>
   );
 }
@@ -222,7 +226,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
           RU - Gestão
         </Text>
-        
+
         <CloseButton
           display={{ base: 'flex', md: 'none' }}
           onClick={onClose}
@@ -279,8 +283,7 @@ const NavItem = ({ icon, children, refLink, ...rest }) => {
 
 export const MobileNav = ({ onOpen, ...rest }) => {
   const outlineColor = useColorModeValue('gray.200', 'gray.700');
-  const { signOut, user, isHub, setIsHub } =
-    useContext(AuthContext);
+  const { signOut, user, isHub, setIsHub } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -312,10 +315,16 @@ export const MobileNav = ({ onOpen, ...rest }) => {
       >
         Logo
       </Text> */}
-      
-      <Heading size="md" cursor={'pointer'} onClick={() => window.location.replace('http://localhost:3000/hub')} fontFamily={'sans-serif'}>
-        UFRPE - RU
-      </Heading>
+      <HStack
+        gap="10px"
+        onClick={() => window.location.replace('http://localhost:3000/hub')}
+        cursor={'pointer'}
+      >
+        <Image src={Logo} w="30px" h="40px" />
+        <Heading size="md" fontFamily={'sans-serif'}>
+          UFRPE - RU
+        </Heading>
+      </HStack>
 
       <HStack spacing={{ base: '0', md: '6' }}>
         {/* <Flex>
@@ -377,24 +386,32 @@ export const MobileNav = ({ onOpen, ...rest }) => {
                 </MenuItem>
               )}
               <MenuDivider />
-              <MenuOptionGroup title='Fichas restantes'>
-              <MenuItemOption cursor={'default'} _hover={{}} pointerEvents="none">
-                <VStack w="100%">
-                  <Flex w="100%" justifyContent="space-between">
-                    <Text >Almoços: </Text>
-                    <Text fontWeight="bold">{user.bought.morning}</Text>
-                  </Flex>
-                  <Flex w="100%" justifyContent="space-between">
-                    <Text >Jantas: </Text>
-                    <Text fontWeight="bold">{user.bought.night}</Text>
-                  </Flex>
-                </VStack>
-              </MenuItemOption >
+              <MenuOptionGroup title="Fichas restantes">
+                <MenuItemOption
+                  cursor={'default'}
+                  _hover={{}}
+                  pointerEvents="none"
+                >
+                  <VStack w="100%">
+                    <Flex w="100%" justifyContent="space-between">
+                      <Text>Almoços: </Text>
+                      <Text fontWeight="bold">{user.bought.morning}</Text>
+                    </Flex>
+                    <Flex w="100%" justifyContent="space-between">
+                      <Text>Jantas: </Text>
+                      <Text fontWeight="bold">{user.bought.night}</Text>
+                    </Flex>
+                  </VStack>
+                </MenuItemOption>
               </MenuOptionGroup>
               <MenuDivider />
-              <MenuItem onClick={() => {
-                signOut()
-                }}>Sair</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  signOut();
+                }}
+              >
+                Sair
+              </MenuItem>
             </MenuList>
           </Menu>
         </Flex>

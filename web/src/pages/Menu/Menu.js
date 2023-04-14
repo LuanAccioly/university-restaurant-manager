@@ -14,7 +14,7 @@ import 'react-multi-carousel/lib/styles.css';
 import './menu.css';
 import { Spinner, useColorMode } from '@chakra-ui/react';
 
-export const Menu = ({data, loading}) => {
+export const Menu = ({ data, loading }) => {
   const { colorMode } = useColorMode();
   const imageStyle = {
     filter: colorMode === 'dark' ? 'brightness(0.7)' : 'brightness(1)',
@@ -39,19 +39,21 @@ export const Menu = ({data, loading}) => {
     },
   };
 
-  if(!data) {
+  if (!data) {
     return (
-      <Center h={"75vh"} overflow={'hidden'}>
-    <Image
-     src="https://i.pinimg.com/originals/ff/c3/d3/ffc3d3f7e25c28ea2d3fe42231736f00.png"
+      <Center h={'75vh'} overflow={'hidden'}>
+        <Image
+          src="https://i.pinimg.com/originals/ff/c3/d3/ffc3d3f7e25c28ea2d3fe42231736f00.png"
           boxSize="80%"
           size="sm"
           objectFit="contain"
           objectPosition="center"
-     />
-    <Heading  fontSize='6xl' fontFamily={'sans-serif'}>Nenhum cardápio para hoje</Heading >
-    </Center>
-    )
+        />
+        <Heading fontSize="6xl" fontFamily={'sans-serif'}>
+          Nenhum cardápio para hoje
+        </Heading>
+      </Center>
+    );
   }
 
   return (
@@ -88,34 +90,34 @@ export const Menu = ({data, loading}) => {
             </Box>
           </Box>
           <Box
-          cursor="pointer"
-          w={['70%', '85%']}
-          h={['auto', '95%']}
-          borderWidth="2px"
-          borderRadius="15px"
-          overflow="hidden"
-          maxW="330px"
-          zIndex={'base'}
-        >
-          <Box
-            bgImage={`url('http://localhost:3002/${data.suco.picture}')`}
-            bgPosition="center"
-            bgSize="cover"
-            h={['150px', '200px']}
-            width="100%"
-            flex="1"
-            style={imageStyle}
-            // borderRadius="lg"
-          />
-          <Box p="5">
-          <Heading as="h2" size="xl">
-                  Suco do dia:
-                </Heading>
-                <Heading as="h4" size="md">
-                  {data.suco.name}
-                </Heading>
+            cursor="pointer"
+            w={['70%', '85%']}
+            h={['auto', '95%']}
+            borderWidth="2px"
+            borderRadius="15px"
+            overflow="hidden"
+            maxW="330px"
+            zIndex={'base'}
+          >
+            <Box
+              bgImage={`url('http://localhost:3002/${data.suco.picture}')`}
+              bgPosition="center"
+              bgSize="cover"
+              h={['150px', '200px']}
+              width="100%"
+              flex="1"
+              style={imageStyle}
+              // borderRadius="lg"
+            />
+            <Box p="5">
+              <Heading as="h2" size="xl">
+                Suco do dia:
+              </Heading>
+              <Heading as="h4" size="md">
+                {data.suco.name}
+              </Heading>
+            </Box>
           </Box>
-        </Box>
           {/* <Box bg="green.100" w="300px" borderRadius="15px" p="30px">
             <Image
               src={`http://localhost:3002/${data.suco.picture}`}
