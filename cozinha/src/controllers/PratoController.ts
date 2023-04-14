@@ -137,10 +137,18 @@ class PratoController {
 
         if(!req.user.manager) return res.sendStatus(401)
 
+        const prato = await Prato.findOne({
+            _id: new Types.ObjectId(id)
+        })
+
+        const imagePath = `./images/${prato.picture}`;
+
         try {
             await Prato.findOneAndDelete({
                 _id: new Types.ObjectId(id)
             })
+
+            fs.unlinkSync(imagePath);
 
             return res.status(200).json({
                 message: "Prato excluido com sucesso"

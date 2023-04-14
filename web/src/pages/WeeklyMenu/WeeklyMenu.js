@@ -8,6 +8,7 @@ import {
   FormLabel,
   Heading,
   HStack,
+  Image,
   Input,
   Spinner,
   Text,
@@ -109,7 +110,6 @@ export const WeeklyMenu = () => {
     </Center>
   }
 
-
   return (
     <Flex w="100%" h={isAuthenticated ? '92vh' : '100vh'}>
       <VStack w="100%" h={'100%'}>
@@ -142,8 +142,15 @@ export const WeeklyMenu = () => {
           </Flex>
         </Flex>
         {!menu ? 
-        <Center h={'100vh'} w={'100%'}>
-            <Heading>Houve um problema ao carregar os dados, tente novamente mais tarde</Heading>
+        <Center h={"75vh"} overflow={'hidden'}>
+        <Image
+         src="https://i.pinimg.com/originals/ff/c3/d3/ffc3d3f7e25c28ea2d3fe42231736f00.png"
+              boxSize="80%"
+              size="sm"
+              objectFit="contain"
+              objectPosition="center"
+         />
+        <Heading  fontSize='6xl' fontFamily={'sans-serif'}>Nenhum cardápio para hoje</Heading >
         </Center> : (
           <>
             <Menu data={menu} loading={loading} />
