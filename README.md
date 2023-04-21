@@ -32,6 +32,8 @@ Tecnologias utilizadas:
 - Axios
 - ReactJS
 - Chakra UI
+- Cookies
+- LocalStorage
 
 ![](.github/images/web.png)
 
@@ -49,6 +51,7 @@ Módulo responsável pela cadastro de usuários, login, autenticação, contagem
 - Express
 - JWT
 - MongoDB
+- BCrypt
 
 ### [Gerenciamento de Pratos/Cardápios (cozinha) ](cozinha)
 
@@ -65,6 +68,7 @@ Módulo responsável pela cadastro de usuários, login, autenticação, contagem
 - Express
 - JWT
 - MongoDB
+- Multer
   
 ### [Serviço de Pagamento](payment)
 
