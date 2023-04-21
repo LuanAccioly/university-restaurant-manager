@@ -28,6 +28,7 @@ import { pagamentoApi, userApi } from '../../services/api';
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import { useNavigate } from 'react-router-dom';
+import QRCode from 'react-qr-code';
 
 export const Payment = () => {
   const navigate = useNavigate();
@@ -96,8 +97,7 @@ export const Payment = () => {
 
     pagamentoApi
       .post('/payment/pay', postData)
-      .then(async (response) => {
-
+      .then(async response => {
         if (response.data.payment_status === 'Pagamento aprovado') {
           toast({
             title: `Pagamento aprovado com sucesso!`,
@@ -111,16 +111,15 @@ export const Payment = () => {
               bought: {
                 morning: lunch,
                 night: dinner,
-            }
+              },
             });
 
             setTimeout(() => {
               setDinner(0);
               setLunch(0);
-              window.location.replace('http://localhost:3000/hub/')
+              window.location.replace('http://localhost:3000/hub/');
             }, 1000);
-
-            } catch (error) {
+          } catch (error) {
             console.error(error);
             toast({
               title: `Erro na compra`,
@@ -129,7 +128,6 @@ export const Payment = () => {
               isClosable: true,
             });
           }
-
         } else if (response.data.payment_status === 'Falha no pagamento') {
           toast({
             title: `Falha no pagamento, tente novamente!`,
@@ -271,7 +269,7 @@ export const Payment = () => {
                         w="100%"
                         maxLength="2"
                         placeholder="XX"
-                        type='number'
+                        type="number"
                         isRequired
                       />
                       <Heading size="md">/</Heading>
@@ -284,7 +282,7 @@ export const Payment = () => {
                         w="100%"
                         size="lg"
                         maxLength="2"
-                        type='number'
+                        type="number"
                         placeholder="XX"
                         isRequired
                       />
@@ -301,7 +299,16 @@ export const Payment = () => {
                 </Flex>
               </TabPanel>
               <TabPanel>
-                <p>two!</p>
+                <Flex
+                  direction="column"
+                  w="100%"
+                  gap="30px"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Heading>@adoteumanimalderua</Heading>
+                  <QRCode value="https://www.instagram.com/adoteumanimalderua/" />
+                </Flex>
               </TabPanel>
             </TabPanels>
           </Tabs>
